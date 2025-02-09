@@ -9,44 +9,38 @@ struct Student
 	double final_score_med;
 };
 
+int numInput(const std::string& prompt, int limit_max = INT_MAX, int limit_min = INT_MIN);
+std::string strInput(const std::string& prompt, int limit_max = INT_MAX, int limit_min = INT_MIN);
+
 int main()
 {
 	std::vector<Student> students;
 
-	int n, m;
 	bool use_median = false;
-	int choice = 1;
 
-	cout << "Pasirinkite galutinio balo skaiciavimo buda (1 - vidurkis, 2 - mediana): ";
-	cin >> choice;
-	cout << "Iveskite studentu skaiciu: ";
-	cin >> n;
-	cout << "Iveskite namu darbu skaiciu: ";
-	cin >> m;
+	int choice = numInput("Pasirinkite galutinio balo skaiciavimo buda (1 - vidurkis, 2 - mediana): ", 2, 1);
+	const int n = numInput("Iveskite studentu skaiciu: ", INT_MAX, 0);
+	const int m = numInput("Iveskite namu darbu skaiciu: ", INT_MAX, 0);
 
-	if (choice == 2)
-	{
+	if (choice == 2) {
 		use_median = true;
 	}
 
 	for (size_t i = 0; i < n; i++)
 	{
 		Student student;
-		cout << "Iveskite " << i + 1 << " studento varda: ";
-		cin >> student.f_name;
-		cout << "Iveskite " << i + 1 << " studento pavarde: ";
-		cin >> student.l_name;
+		student.f_name = strInput("Iveskite " + std::to_string(i + 1) + " studento varda: ");
+		student.l_name = strInput("Iveskite " + std::to_string(i + 1) + " studento pavarde: ");
+
 
 		for (int j = 0; j < m; j++)
 		{
 			int hw_score;
-			cout << "Iveskite " << i + 1 << " studento " << j + 1 << " namu darbo rezultata: ";
-			cin >> hw_score;
+			hw_score = numInput("Iveskite " + std::to_string(i + 1) + " studento " + std::to_string(j + 1) + " namu darbo rezultata: ", GRADE_MAX, 0);
 			student.hw_scores.push_back(hw_score);
 		}
 
-		cout << "Iveskite egzamino rezultata: ";
-		cin >> student.exam_score;
+		student.exam_score = numInput("Iveskite egzamino rezultata: ", GRADE_MAX, 0);
 
 		students.push_back(student);
 	}
@@ -119,4 +113,55 @@ int main()
 	}
 
 	return 0;
+}
+
+int numInput(const std::string& prompt, const int limit_max /*= INT_MAX*/, const int limit_min /*= INT_MIN*/)
+{
+	int num;
+	while (true) {
+		cout << prompt;
+		if (cin >> num) {
+			if (num > limit_max)
+			{
+				cout << "Ivestas per didelis skaicius\n";
+				continue;
+			}
+			if (num < limit_min)
+			{
+				cout << "Ivestas per mazas skaicius\n";
+				continue;
+			}
+			break;
+		} else {
+			cout << "Klaidinga ivestis\n";
+			cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+	return num;
+}
+
+std::string strInput(const std::string& prompt, int limit_max /*= INT_MAX*/, int limit_min /*= INT_MIN*/)
+{
+	std::string str;
+
+	while (true) {
+		cout << prompt;
+		if (cin >> str) {
+			if ((int)str.length() > limit_max) {
+				cout << "Per ilga ivestis\n";
+				continue;
+			}
+			if ((int)str.length() < limit_min) {
+				cout << "Per trumpa ivestis\n";
+				continue;
+			}
+			break;
+		} else {
+			cout << "Klaidinga ivestis\n";
+			cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+	return str;
 }
