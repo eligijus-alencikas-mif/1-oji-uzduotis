@@ -17,5 +17,6 @@ extern int numInput(const std::string &prompt, int limit_max = INT_MAX, int limi
 extern std::string strInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN);
 
 extern void use_vector(const bool &use_median);
+extern void use_c_arr(const bool &use_median);
 
 #endif //MAIN_H

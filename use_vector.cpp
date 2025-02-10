@@ -1,5 +1,7 @@
 #include "main.h"
 
+using std::cout;
+
 struct Student {
     std::string f_name, l_name;
     std::vector<int> hw_scores;
@@ -7,9 +9,6 @@ struct Student {
     double final_score_avg{};
     double final_score_med{};
 };
-
-using std::cout;
-
 
 void use_vector(const bool &use_median) {
     std::vector<Student> students;
