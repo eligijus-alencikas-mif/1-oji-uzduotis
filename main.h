@@ -8,13 +8,12 @@
 #include <climits>
 #include <limits>
 
-
 #define NAME_LENGTH 15
 #define HW_WEIGHT 0.4
 #define EXAM_WEIGHT 0.6
 #define GRADE_MAX 10
 
-using std::cin;
-using std::cout;
+extern int numInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN);
+extern std::string strInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN);
 
 #endif //MAIN_H
