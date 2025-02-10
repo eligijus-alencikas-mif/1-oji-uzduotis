@@ -6,12 +6,12 @@ struct Student
 {
     std::string f_name, l_name;
     int *hw_scores = nullptr;
-	int hw_scores_size{};
+	unsigned long hw_scores_size{};
     int exam_score{};
     double final_score_avg{};
     double final_score_med{};
 
-	explicit Student(int hw_size = 0) {
+	explicit Student(unsigned long hw_size = 0) {
 		hw_scores_size = hw_size;
 		if (hw_scores_size > 0) {
 			hw_scores = new int[hw_scores_size];
@@ -78,42 +78,42 @@ void use_c_arr(const bool &use_median) {
 	}
 	cout << '\n';
 
-	for (size_t i = 0; i < students.size(); i++)
+	for (auto & student : students)
 	{
 		double hw_sum = 0;
 
-		for (size_t j = 0; j < students[i].hw_scores_size; j++)
+		for (size_t j = 0; j < student.hw_scores_size; j++)
 		{
 			// hw_sum += students[i].hw_scores[j];
 		}
 
-		std::vector<int> scores(students[i].hw_scores, students[i].hw_scores + students[i].hw_scores_size);
-		scores.push_back(students[i].exam_score);
+		std::vector<int> scores(student.hw_scores, student.hw_scores + student.hw_scores_size);
+		scores.push_back(student.exam_score);
 
 		std::sort(scores.begin(), scores.end());
 
 		if (scores.size() % 2 == 0)
 		{
-			students[i].final_score_med = ((double)scores[scores.size() / 2 - 1] + (double)scores[scores.size() / 2]) / 2.0;
+			student.final_score_med = (static_cast<double>(scores[scores.size() / 2 - 1]) + static_cast<double>(scores[scores.size() / 2])) / 2.0;
 		}
 		else
 		{
-			students[i].final_score_med = scores[(scores.size() - 1) / 2];
+			student.final_score_med = scores[(scores.size() - 1) / 2];
 		}
 
-		double hw_avg = (students[i].hw_scores_size == 0) ? 0 : hw_sum / (double)students[i].hw_scores_size;
+		double hw_avg = (student.hw_scores_size == 0) ? 0 : hw_sum / static_cast<double>(student.hw_scores_size);
 
-		students[i].final_score_avg = HW_WEIGHT * hw_avg + EXAM_WEIGHT * (double)students[i].exam_score;
+		student.final_score_avg = HW_WEIGHT * hw_avg + EXAM_WEIGHT * static_cast<double>(student.exam_score);
 
-		cout << std::setw(NAME_LENGTH) << std::left << students[i].f_name
-			 << std::setw(NAME_LENGTH) << std::left << students[i].l_name;
+		cout << std::setw(NAME_LENGTH) << std::left << student.f_name
+			 << std::setw(NAME_LENGTH) << std::left << student.l_name;
 		if (use_median)
 		{
-			cout << std::setprecision(3) << students[i].final_score_med;
+			cout << std::setprecision(3) << student.final_score_med;
 		}
 		else
 		{
-			cout << std::setprecision(3) << students[i].final_score_avg;
+			cout << std::setprecision(3) << student.final_score_avg;
 		}
 		cout << '\n';
 	}
