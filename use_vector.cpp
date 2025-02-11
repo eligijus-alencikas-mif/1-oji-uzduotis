@@ -90,11 +90,7 @@ void use_vector(const bool &use_median, const bool &generate_names, const bool &
         std::sort(scores.begin(), scores.end());
 
         if (scores.size() % 2 == 0) {
-            student.final_score_med = 0.5;
-
-            // student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2])/static_cast<double>(2);
-            // student.final_score_med = (static_cast<double>(scores.at(scores.size() / 2 - 1)) + static_cast<double>(scores.at(
-                                           // scores.size() / 2))) / 2.0;
+            student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2])/static_cast<double>(2);
         } else {
             student.final_score_med = scores[(scores.size() - 1) / 2];
         }
