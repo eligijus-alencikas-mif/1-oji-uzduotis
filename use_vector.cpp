@@ -10,32 +10,51 @@ struct Student {
     double final_score_med{};
 };
 
-void use_vector(const bool &use_median) {
+void use_vector(const bool &use_median, const bool &generate_names, const bool &generate_grades) {
     std::vector<Student> students;
 
     while (true) {
         Student student;
-        student.f_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento varda: ");
-        student.l_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento pavarde: ");
-
-
-        while (true) {
+        if (generate_names) {
+            student.f_name = gen_f_name();
+            student.l_name = gen_l_name();
+            cout << "Sugeneruotas studento vardas " + student.f_name + " " + student.l_name + "\n";
+        } else {
+            student.f_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento varda: ");
+            student.l_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento pavarde: ");
+        }
+        if (generate_grades) {
+            int n = numInput("Kiek ND pazymiu generuoti studentui " + std::to_string(students.size() + 1) + "? : ",
+                             INT_MAX, 0);
+            cout << "Namu darbu pazymiai: ";
+            for (int i = 0; i < n; i++) {
+                student.hw_scores.push_back(rand_int(0, GRADE_MAX));
+                cout << student.hw_scores.at(i) << " ";
+            }
+            cout << "\n";
+        }
+        while (!generate_grades) {
             if (
                 student.hw_scores.empty()
                 && !numInput("Ar norite ivesti namu darbu rezultatus? (1 - taip, 0 - ne): ", 1, 0)
-                )
+            )
                 break;
             int hw_score;
             hw_score = numInput(
-                "Iveskite " + std::to_string(students.size() + 1) + " studento " + std::to_string(student.hw_scores.size() + 1) + " namu darbo rezultata: ",
+                "Iveskite " + std::to_string(students.size() + 1) + " studento " + std::to_string(
+                    student.hw_scores.size() + 1) + " namu darbo rezultata: ",
                 GRADE_MAX, 0);
             student.hw_scores.push_back(hw_score);
 
             if (!numInput("Ar norite ivesti dar viena namu darba? (1 - taip, 0 - ne): ", 1, 0))
                 break;
         }
-
-        student.exam_score = numInput("Iveskite egzamino rezultata: ", GRADE_MAX, 0);
+        if (generate_grades) {
+            student.exam_score = rand_int(0, GRADE_MAX);
+            cout << "Egzamino pazymys: " << student.exam_score << "\n";
+        } else {
+            student.exam_score = numInput("Iveskite egzamino rezultata: ", GRADE_MAX, 0);
+        }
 
         students.push_back(student);
 
@@ -71,8 +90,11 @@ void use_vector(const bool &use_median) {
         std::sort(scores.begin(), scores.end());
 
         if (scores.size() % 2 == 0) {
-            student.final_score_med = (static_cast<double>(scores[scores.size() / 2 - 1]) + static_cast<double>(scores[
-                                           scores.size() / 2])) / 2.0;
+            student.final_score_med = 0.5;
+
+            // student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2])/static_cast<double>(2);
+            // student.final_score_med = (static_cast<double>(scores.at(scores.size() / 2 - 1)) + static_cast<double>(scores.at(
+                                           // scores.size() / 2))) / 2.0;
         } else {
             student.final_score_med = scores[(scores.size() - 1) / 2];
         }
