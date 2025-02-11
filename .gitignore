@@ -1,3 +1,5 @@
 cmake-build-debug
+cmake-build-default
+cmake-build-release
 .idea
 CMakeLists.txt

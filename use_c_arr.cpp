@@ -1,0 +1,151 @@
+#include "main.h"
+
+using std::cout;
+
+struct c_Student
+{
+    std::string f_name, l_name;
+    int *hw_scores = nullptr;
+	unsigned long hw_scores_size{};
+    int exam_score{};
+    double final_score_avg{};
+    double final_score_med{};
+
+	explicit c_Student(unsigned long hw_size = 0) {
+		hw_scores_size = hw_size;
+		if (hw_scores_size > 0) {
+			hw_scores = new int[hw_scores_size];
+		}
+	}
+};
+
+void use_c_arr(const bool &use_median, const bool &generate_names, const bool &generate_grades) {
+	std::vector<c_Student> students{};
+
+	for (size_t i = 0; true; i++)
+	{
+		std::vector<int> hw_scores{};
+		std::string tmp_f_name, tmp_l_name;
+
+		if (generate_names) {
+			tmp_f_name = gen_f_name();
+			tmp_l_name = gen_l_name();
+			cout << "Sugeneruotas studento vardas " + tmp_f_name + " " + tmp_l_name + "\n";
+		} else {
+			tmp_f_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento varda: ");
+			tmp_l_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento pavarde: ");
+		}
+
+		if (generate_grades) {
+			int n = numInput("Kiek ND pazymiu generuoti studentui " + std::to_string(students.size() + 1) + "? : ",
+							 INT_MAX, 0);
+			cout << "Namu darbu pazymiai: ";
+			for (int i = 0; i < n; i++) {
+				hw_scores.push_back(rand_int(0, GRADE_MAX));
+				cout << hw_scores[i] << " ";
+			}
+			cout << "\n";
+		}
+
+		for (int j = 0; !generate_grades; j++)
+		{
+			if (j == 0) {
+				if (!numInput("Ar norite ivesti namu darbu rezultatus? (1 - taip, 0 - ne): ", 1, 0))
+					break;
+			}
+			int score = numInput("Iveskite " + std::to_string(i + 1) + " studento " + std::to_string(j + 1) + " namu darbo rezultata: ", GRADE_MAX, 0);
+			hw_scores.push_back(score);
+			// student.hw_scores[student.hw_scores_size] = numInput("Iveskite " + std::to_string(i + 1) + " studento " + std::to_string(j + 1) + " namu darbo rezultata: ", GRADE_MAX, 0);
+			// student.hw_scores_size++;
+
+			if (!numInput("Ar norite ivesti dar viena namu darba? (1 - taip, 0 - ne): ", 1, 0))
+				break;
+		}
+		c_Student student(hw_scores.size());
+
+		if (generate_grades) {
+			student.exam_score = rand_int(0, GRADE_MAX);
+			cout << "Egzamino pazymys: " << student.exam_score << "\n";
+		} else {
+			student.exam_score = numInput("Iveskite egzamino rezultata: ", GRADE_MAX, 0);
+		}
+
+		student.f_name = tmp_f_name;
+		student.l_name = tmp_l_name;
+		for (size_t j = 0; j < hw_scores.size(); j++) {
+			student.hw_scores[j] = hw_scores[j];
+		}
+
+		students.push_back(student);
+
+		if (!numInput("Ar norite ivesti dar viena studenta? (1 - taip, 0 - ne): ", 1, 0))
+			break;
+	}
+
+	// output
+
+	cout << '\n'
+		 << std::setw(NAME_LENGTH) << std::left << "Vardas"
+		 << std::setw(NAME_LENGTH) << std::left << "Pavarde";
+	if (use_median)
+	{
+		cout << "Galutinis (Med.)";
+	}
+	else
+	{
+		cout << "Galutinis (Vid.)";
+	}
+	cout << '\n';
+
+	size_t line_length = (NAME_LENGTH * 2) + 16;
+	for (size_t i = 0; i < line_length; i++)
+	{
+		cout << "-";
+	}
+	cout << '\n';
+
+	for (auto & student : students)
+	{
+		double hw_sum = 0;
+
+		for (size_t j = 0; j < student.hw_scores_size; j++)
+		{
+			hw_sum += student.hw_scores[j];
+		}
+
+		std::vector<int> scores(student.hw_scores, student.hw_scores + student.hw_scores_size);
+		scores.push_back(student.exam_score);
+
+		std::sort(scores.begin(), scores.end());
+
+		if (scores.size() % 2 == 0)
+		{
+			student.final_score_med = (static_cast<double>(scores[scores.size() / 2 - 1]) + static_cast<double>(scores[scores.size() / 2])) / 2.0;
+		}
+		else
+		{
+			student.final_score_med = scores[(scores.size() - 1) / 2];
+		}
+
+		double hw_avg;
+		if (student.hw_scores_size == 0) {
+			hw_avg = 0;
+		} else {
+			hw_avg = hw_sum / static_cast<double>(student.hw_scores_size);
+		}
+
+		student.final_score_avg = (HW_WEIGHT * hw_avg) + (EXAM_WEIGHT * static_cast<double>(student.exam_score));
+
+		cout << std::setw(NAME_LENGTH) << std::left << student.f_name
+			 << std::setw(NAME_LENGTH) << std::left << student.l_name;
+		if (use_median)
+		{
+			cout << std::setprecision(3) << student.final_score_med;
+		}
+		else
+		{
+			cout << std::setprecision(3) << student.final_score_avg;
+		}
+		cout << '\n';
+	}
+}
