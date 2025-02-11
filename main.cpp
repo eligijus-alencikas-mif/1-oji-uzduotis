@@ -105,6 +105,7 @@ int numInput(const std::string &prompt, const int limit_max /*= INT_MAX*/, const
     while (true) {
         cout << prompt;
         if (cin >> num) {
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if (num > limit_max) {
                 cout << "Ivestas per didelis skaicius\n";
                 continue;
@@ -129,6 +130,7 @@ std::string strInput(const std::string &prompt, int limit_max /*= INT_MAX*/, int
     while (true) {
         cout << prompt;
         if (cin >> str) {
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if (static_cast<int>(str.length()) > limit_max) {
                 cout << "Per ilga ivestis\n";
                 continue;
