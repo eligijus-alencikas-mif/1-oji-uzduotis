@@ -9,7 +9,7 @@
 #include <limits>
 #include <fstream>
 
-#define NAME_LENGTH 15
+#define NAME_LENGTH 17
 #define HW_WEIGHT 0.4
 #define EXAM_WEIGHT 0.6
 #define GRADE_MAX 10
@@ -31,7 +31,7 @@ extern std::string strInput(const std::string &prompt, int limit_max = INT_MAX, 
 
 // use_vector.cpp
 
-extern void use_vector(const bool &use_median, const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file);
+extern void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file);
 
 // stud_gen.cpp
 

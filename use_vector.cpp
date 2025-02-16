@@ -2,7 +2,7 @@
 
 using std::cout;
 
-void use_vector(const bool &use_median, const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file) {
+void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file) {
     std::vector<Student> students;
     if (get_students_from_file) {
         students = read_students();
@@ -59,14 +59,10 @@ void use_vector(const bool &use_median, const bool &generate_names, const bool &
 
     cout << '\n'
             << std::setw(NAME_LENGTH) << std::left << "Vardas"
-            << std::setw(NAME_LENGTH) << std::left << "Pavarde";
-    if (use_median) {
-        cout << "Galutinis (Med.)";
-    } else {
-        cout << "Galutinis (Vid.)";
-    }
+            << std::setw(NAME_LENGTH) << std::left << "Pavarde"
+            << "Galutinis (Vid.) Galutinis (Med.)";
     cout << '\n';
-    const size_t line_length = (NAME_LENGTH * 2) + 16;
+    const size_t line_length = (NAME_LENGTH * 2) + 33;
     for (size_t i = 0; i < line_length; i++) {
         cout << "-";
     }
@@ -100,12 +96,9 @@ void use_vector(const bool &use_median, const bool &generate_names, const bool &
         student.final_score_avg = HW_WEIGHT * hw_avg + EXAM_WEIGHT * static_cast<double>(student.exam_score);
 
         cout << std::setw(NAME_LENGTH) << std::left << student.f_name
-                << std::setw(NAME_LENGTH) << std::left << student.l_name;
-        if (use_median) {
-            cout << std::setprecision(3) << student.final_score_med;
-        } else {
-            cout << std::setprecision(3) << student.final_score_avg;
-        }
+                << std::setw(NAME_LENGTH) << std::left << student.l_name
+                << std::setw(17) << std::left << std::setprecision(3) << student.final_score_med
+                << std::setprecision(3) << student.final_score_avg;
         cout << '\n';
     }
 }

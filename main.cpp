@@ -29,10 +29,10 @@ int main() {
             return 0;
     }
 
-    choice = numInput("Pasirinkite galutinio balo skaiciavimo buda (1 - vidurkis, 2 - mediana): ", 2, 1);
-    bool use_median = choice != 1;
+    // choice = numInput("Pasirinkite galutinio balo skaiciavimo buda (1 - vidurkis, 2 - mediana): ", 2, 1);
+    // bool use_median = choice != 1;
 
-    use_vector(use_median, generate_names, generate_grades, get_students_from_file);
+    use_vector(generate_names, generate_grades, get_students_from_file);
 
     return 0;
 }
