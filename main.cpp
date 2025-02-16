@@ -1,8 +1,6 @@
 #include "main.h"
 
 int main() {
-    // read_students();
-    // return 0;
     int choice = numInput("Pasirinkte duomenu generavimo metoda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - skaityti is failo, 5 - baigti darba): ", 5, 1);
 
     bool generate_names = false;
@@ -29,10 +27,9 @@ int main() {
             return 0;
     }
 
-    // choice = numInput("Pasirinkite galutinio balo skaiciavimo buda (1 - vidurkis, 2 - mediana): ", 2, 1);
-    // bool use_median = choice != 1;
+    int sort_method = numInput("Pasirinkite rusiavimo buda (1 - pagal varda, 2 - pagal pavarde, 3 - pagal pazymiu vidurki, 4 - pagal pazymiu mediana, 5 - nerusiuoti): ", 5, 1);
 
-    use_vector(generate_names, generate_grades, get_students_from_file);
+    use_vector(generate_names, generate_grades, get_students_from_file, sort_method);
 
     return 0;
 }

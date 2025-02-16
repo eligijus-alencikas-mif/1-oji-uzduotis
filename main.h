@@ -31,7 +31,7 @@ extern std::string strInput(const std::string &prompt, int limit_max = INT_MAX, 
 
 // use_vector.cpp
 
-extern void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file);
+extern void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file, int sort_method);
 
 // stud_gen.cpp
 

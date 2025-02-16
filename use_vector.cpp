@@ -2,8 +2,16 @@
 
 using std::cout;
 
-void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file) {
+bool student_sort_f_name(Student const &lhs, Student const &rhs);
+bool student_sort_l_name(Student const &lhs, Student const &rhs);
+void set_student_avg(Student &student);
+void set_student_median(Student &student);
+bool student_sort_avg(Student const &lhs, Student const &rhs);
+bool student_sort_med(Student const &lhs, Student const &rhs);
+
+void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file, const int sort_method) {
     std::vector<Student> students;
+
     if (get_students_from_file) {
         students = read_students();
     }
@@ -68,37 +76,73 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
     }
     cout << '\n';
 
-    for (Student &student: students) {
-        double hw_sum = 0;
+    for (Student &student : students) {
+        set_student_avg(student);
+        set_student_median(student);
+    }
 
-        for (int hw_score: student.hw_scores) {
-            hw_sum += hw_score;
-        }
+    if (sort_method == 1) {
+        std::sort(students.begin(), students.end(), student_sort_f_name);
+    }else if (sort_method == 2) {
+        std::sort(students.begin(), students.end(), student_sort_l_name);
+    }else if (sort_method == 3) {
+        std::sort(students.begin(), students.end(), student_sort_avg);
+    }else if (sort_method == 4) {
+        std::sort(students.begin(), students.end(), student_sort_med);
+    }
 
-        std::vector<int> scores = student.hw_scores;
-        scores.push_back(student.exam_score);
-
-        std::sort(scores.begin(), scores.end());
-
-        if (scores.size() % 2 == 0) {
-            student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2])/static_cast<double>(2);
-        } else {
-            student.final_score_med = scores[(scores.size() - 1) / 2];
-        }
-
-        double hw_avg;
-        if (student.hw_scores.empty()) {
-            hw_avg = 0;
-        } else {
-            hw_avg = hw_sum / static_cast<double>(student.hw_scores.size());
-        }
-
-        student.final_score_avg = HW_WEIGHT * hw_avg + EXAM_WEIGHT * static_cast<double>(student.exam_score);
-
+    for (Student const &student: students) {
         cout << std::setw(NAME_LENGTH) << std::left << student.f_name
                 << std::setw(NAME_LENGTH) << std::left << student.l_name
-                << std::setw(17) << std::left << std::setprecision(3) << student.final_score_med
-                << std::setprecision(3) << student.final_score_avg;
+                << std::setw(17) << std::left << std::setprecision(3) << student.final_score_avg
+                << std::setprecision(3) << student.final_score_med;
         cout << '\n';
     }
+}
+
+void set_student_avg(Student &student) {
+    if (student.hw_scores.empty()) {
+        student.final_score_avg = 0;
+        return;
+    }
+
+    double hw_sum = 0;
+    double hw_avg = 0;
+
+    for (const int hw_score: student.hw_scores) {
+        hw_sum += hw_score;
+    }
+
+    hw_avg = hw_sum / static_cast<double>(student.hw_scores.size());
+
+    student.final_score_avg = HW_WEIGHT * hw_avg + EXAM_WEIGHT * static_cast<double>(student.exam_score);
+}
+
+void set_student_median(Student &student) {
+    std::vector<int> scores = student.hw_scores;
+    scores.push_back(student.exam_score);
+
+    std::sort(scores.begin(), scores.end());
+
+    if (scores.size() % 2 == 0) {
+        student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2])/static_cast<double>(2);
+    } else {
+        student.final_score_med = scores[(scores.size() - 1) / 2];
+    }
+}
+
+bool student_sort_f_name(Student const &lhs, Student const &rhs) {
+    return lhs.f_name < rhs.f_name;
+}
+
+bool student_sort_l_name(Student const &lhs, Student const &rhs) {
+    return lhs.l_name < rhs.l_name;
+}
+
+bool student_sort_avg(Student const &lhs, Student const &rhs) {
+    return lhs.final_score_avg < rhs.final_score_avg;
+}
+
+bool student_sort_med(Student const &lhs, Student const &rhs) {
+    return lhs.final_score_med < rhs.final_score_med;
 }
