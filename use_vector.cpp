@@ -2,18 +2,13 @@
 
 using std::cout;
 
-struct Student {
-    std::string f_name, l_name;
-    std::vector<int> hw_scores;
-    int exam_score{};
-    double final_score_avg{};
-    double final_score_med{};
-};
-
-void use_vector(const bool &use_median, const bool &generate_names, const bool &generate_grades) {
+void use_vector(const bool &use_median, const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file) {
     std::vector<Student> students;
+    if (get_students_from_file) {
+        students = read_students();
+    }
 
-    while (true) {
+    while (!get_students_from_file) {
         Student student;
         if (generate_names) {
             student.f_name = gen_f_name();
