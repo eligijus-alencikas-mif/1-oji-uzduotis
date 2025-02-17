@@ -17,11 +17,11 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
     Timer timer;
     File_students file;
     Output_students output(output_to_file);
+    timer.timer_start();
 
     int counter = 0;
 
     while (true) {
-        timer.timer_start();
         std::vector<Student> students;
 
         if (get_students_from_file) {
@@ -34,20 +34,11 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
             break;
         }
 
-        timer.timer_stop();
-        timer.time_include("Read time:");
-
-        timer.timer_start();
 
         for (Student &student: students) {
             set_student_avg(student);
             set_student_median(student);
         }
-
-        timer.timer_stop();
-        timer.time_include("Calculate time:");
-
-        timer.timer_start();
 
 
         switch (sort_method) {
@@ -67,17 +58,12 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
                 break;
         }
 
-        timer.timer_stop();
-        timer.time_include("Sorting time:");
-
-        timer.timer_start();
         output.output_students(students);
-        timer.timer_stop();
-
-        timer.time_include("write time:");
         counter++;
         file.clear_students();
     }
+    timer.timer_stop();
+    timer.time_include("Time taken:");
     timer.timer_write();
 }
 
