@@ -10,6 +10,8 @@ bool student_sort_avg(Student const &lhs, Student const &rhs);
 bool student_sort_med(Student const &lhs, Student const &rhs);
 
 void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file, const int sort_method) {
+    Timer timer;
+    timer.timer_start();
     std::vector<Student> students;
 
     if (get_students_from_file) {
@@ -65,6 +67,9 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
             break;
     }
 
+    timer.timer_stop();
+    timer.time_include("Read time:");
+
     cout << '\n'
             << std::setw(NAME_LENGTH) << std::left << "Vardas"
             << std::setw(NAME_LENGTH) << std::left << "Pavarde"
@@ -76,10 +81,17 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
     }
     cout << '\n';
 
+    timer.timer_start();
+
     for (Student &student : students) {
         set_student_avg(student);
         set_student_median(student);
     }
+
+    timer.timer_stop();
+    timer.time_include("Calculate time:");
+
+    timer.timer_start();
 
     if (sort_method == 1) {
         std::sort(students.begin(), students.end(), student_sort_f_name);
@@ -91,6 +103,10 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
         std::sort(students.begin(), students.end(), student_sort_med);
     }
 
+    timer.timer_stop();
+    timer.time_include("Sorting time:");
+
+    timer.timer_start();
     for (Student const &student: students) {
         cout << std::setw(NAME_LENGTH) << std::left << student.f_name
                 << std::setw(NAME_LENGTH) << std::left << student.l_name
@@ -98,6 +114,9 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
                 << std::setprecision(3) << student.final_score_med;
         cout << '\n';
     }
+    timer.timer_stop();
+    timer.time_include("write time:");
+    timer.timer_write();
 }
 
 void set_student_avg(Student &student) {
