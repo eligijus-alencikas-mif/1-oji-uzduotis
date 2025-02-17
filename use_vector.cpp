@@ -1,25 +1,136 @@
 #include "main.h"
+#include "read_students.h"
+#include "output_students.h"
 
 using std::cout;
 
-bool student_sort_f_name(Student const &lhs, Student const &rhs);
-bool student_sort_l_name(Student const &lhs, Student const &rhs);
 void set_student_avg(Student &student);
 void set_student_median(Student &student);
 bool student_sort_avg(Student const &lhs, Student const &rhs);
 bool student_sort_med(Student const &lhs, Student const &rhs);
-void output_students(std::vector<Student> const &students, bool out_to_file);
+bool student_sort_f_name(Student const &lhs, Student const &rhs);
+bool student_sort_l_name(Student const &lhs, Student const &rhs);
+void read_user_input(const bool &generate_names, const bool &generate_grades, std::vector<Student> &students);
 
-void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file, const int sort_method, const bool output_to_file) {
+void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file,
+                const int sort_method, const bool output_to_file) {
     Timer timer;
-    timer.timer_start();
-    std::vector<Student> students;
+    File_students file;
+    Output_students output(output_to_file);
 
-    if (get_students_from_file) {
-        students = read_students();
+    int counter = 0;
+
+    while (true) {
+        timer.timer_start();
+        std::vector<Student> students;
+
+        if (get_students_from_file) {
+            students = file.read_students();
+        }else {
+            read_user_input(generate_names, generate_grades, students);
+        }
+
+        if (students.empty()) {
+            break;
+        }
+
+        timer.timer_stop();
+        timer.time_include("Read time:");
+
+        timer.timer_start();
+
+        for (Student &student: students) {
+            set_student_avg(student);
+            set_student_median(student);
+        }
+
+        timer.timer_stop();
+        timer.time_include("Calculate time:");
+
+        timer.timer_start();
+
+
+        switch (sort_method) {
+            case 1:
+                std::sort(students.begin(), students.end(), student_sort_f_name);
+            break;
+            case 2:
+                std::sort(students.begin(), students.end(), student_sort_l_name);
+            break;
+            case 3:
+                std::sort(students.begin(), students.end(), student_sort_avg);
+            break;
+            case 4:
+                std::sort(students.begin(), students.end(), student_sort_med);
+            break;
+            default:
+                break;
+        }
+
+        timer.timer_stop();
+        timer.time_include("Sorting time:");
+
+        timer.timer_start();
+        output.output_students(students);
+        timer.timer_stop();
+
+        timer.time_include("write time:");
+        counter++;
+        file.clear_students();
+    }
+    timer.timer_write();
+}
+
+void set_student_avg(Student &student) {
+    if (student.hw_scores.empty()) {
+        student.final_score_avg = 0;
+        return;
     }
 
-    while (!get_students_from_file) {
+    double hw_sum = 0;
+    double hw_avg = 0;
+
+    for (const int hw_score: student.hw_scores) {
+        hw_sum += hw_score;
+    }
+
+    hw_avg = hw_sum / static_cast<double>(student.hw_scores.size());
+
+    student.final_score_avg = HW_WEIGHT * hw_avg + EXAM_WEIGHT * static_cast<double>(student.exam_score);
+}
+
+void set_student_median(Student &student) {
+    std::vector<int> scores = student.hw_scores;
+    scores.push_back(student.exam_score);
+
+    std::nth_element(scores.begin(), scores.begin() + scores.size() / 2, scores.end());
+
+    if (scores.size() % 2 == 0) {
+        student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2]) / static_cast<double>(
+                                      2);
+    } else {
+        student.final_score_med = scores[(scores.size() - 1) / 2];
+    }
+}
+
+bool student_sort_f_name(Student const &lhs, Student const &rhs) {
+    return lhs.f_name < rhs.f_name;
+}
+
+bool student_sort_l_name(Student const &lhs, Student const &rhs) {
+    return lhs.l_name < rhs.l_name;
+}
+
+bool student_sort_avg(Student const &lhs, Student const &rhs) {
+    return lhs.final_score_avg < rhs.final_score_avg;
+}
+
+bool student_sort_med(Student const &lhs, Student const &rhs) {
+    return lhs.final_score_med < rhs.final_score_med;
+}
+
+void read_user_input(const bool &generate_names, const bool &generate_grades, std::vector<Student> &students) {
+    while (true) {
         Student student;
         if (generate_names) {
             student.f_name = gen_f_name();
@@ -66,133 +177,5 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
 
         if (!numInput("Ar norite ivesti dar viena studenta? (1 - taip, 0 - ne): ", 1, 0))
             break;
-    }
-
-    timer.timer_stop();
-    timer.time_include("Read time:");
-
-    timer.timer_start();
-
-    for (Student &student : students) {
-        set_student_avg(student);
-        set_student_median(student);
-    }
-
-    timer.timer_stop();
-    timer.time_include("Calculate time:");
-
-    timer.timer_start();
-
-    if (sort_method == 1) {
-        std::sort(students.begin(), students.end(), student_sort_f_name);
-    }else if (sort_method == 2) {
-        std::sort(students.begin(), students.end(), student_sort_l_name);
-    }else if (sort_method == 3) {
-        std::sort(students.begin(), students.end(), student_sort_avg);
-    }else if (sort_method == 4) {
-        std::sort(students.begin(), students.end(), student_sort_med);
-    }
-
-    timer.timer_stop();
-    timer.time_include("Sorting time:");
-
-    timer.timer_start();
-    output_students(students, output_to_file);
-    timer.timer_stop();
-
-    timer.time_include("write time:");
-    timer.timer_write();
-}
-
-void set_student_avg(Student &student) {
-    if (student.hw_scores.empty()) {
-        student.final_score_avg = 0;
-        return;
-    }
-
-    double hw_sum = 0;
-    double hw_avg = 0;
-
-    for (const int hw_score: student.hw_scores) {
-        hw_sum += hw_score;
-    }
-
-    hw_avg = hw_sum / static_cast<double>(student.hw_scores.size());
-
-    student.final_score_avg = HW_WEIGHT * hw_avg + EXAM_WEIGHT * static_cast<double>(student.exam_score);
-}
-
-void set_student_median(Student &student) {
-    std::vector<int> scores = student.hw_scores;
-    scores.push_back(student.exam_score);
-
-    std::nth_element(scores.begin(), scores.begin() + scores.size() / 2, scores.end());
-    // std::sort(scores.begin(), scores.end());
-
-    if (scores.size() % 2 == 0) {
-        student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2])/static_cast<double>(2);
-    } else {
-        student.final_score_med = scores[(scores.size() - 1) / 2];
-    }
-}
-
-bool student_sort_f_name(Student const &lhs, Student const &rhs) {
-    return lhs.f_name < rhs.f_name;
-}
-
-bool student_sort_l_name(Student const &lhs, Student const &rhs) {
-    return lhs.l_name < rhs.l_name;
-}
-
-bool student_sort_avg(Student const &lhs, Student const &rhs) {
-    return lhs.final_score_avg < rhs.final_score_avg;
-}
-
-bool student_sort_med(Student const &lhs, Student const &rhs) {
-    return lhs.final_score_med < rhs.final_score_med;
-}
-
-void output_students(std::vector<Student> const &students, bool out_to_file) {
-    if (out_to_file) {
-        std::ofstream output("out.txt");
-        output << '\n'
-                << std::setw(NAME_LENGTH) << std::left << "Vardas"
-                << std::setw(NAME_LENGTH) << std::left << "Pavarde"
-                << "Galutinis (Vid.) Galutinis (Med.)"
-                << '\n';
-        const size_t line_length = (NAME_LENGTH * 2) + 33;
-        for (size_t i = 0; i < line_length; i++) {
-            output << "-";
-        }
-        output << '\n';
-
-        for (const Student &student : students) {
-            output << std::setw(NAME_LENGTH) << std::left << student.f_name
-                    << std::setw(NAME_LENGTH) << std::left << student.l_name
-                    << std::setw(17) << std::left << std::setprecision(3) << student.final_score_avg
-                    << std::setprecision(3) << student.final_score_med
-                    << '\n';
-        }
-        output.close();
-        return;
-    }
-
-    cout << '\n'
-        << std::setw(NAME_LENGTH) << std::left << "Vardas"
-        << std::setw(NAME_LENGTH) << std::left << "Pavarde"
-        << "Galutinis (Vid.) Galutinis (Med.)";
-    cout << '\n';
-    const size_t line_length = (NAME_LENGTH * 2) + 33;
-    for (size_t i = 0; i < line_length; i++) {
-        cout << "-";
-    }
-    cout << '\n';
-
-    for (Student const &student: students) {
-        cout << std::setw(NAME_LENGTH) << std::left << student.f_name
-                << std::setw(NAME_LENGTH) << std::left << student.l_name
-                << std::setw(17) << std::left << std::setprecision(3) << student.final_score_avg
-                << std::setprecision(3) << student.final_score_med
-                << '\n';
     }
 }

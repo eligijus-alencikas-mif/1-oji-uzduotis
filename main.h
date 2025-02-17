@@ -15,6 +15,7 @@
 #define EXAM_WEIGHT 0.6
 #define GRADE_MAX 10
 #define INPUT_FILE_NAME "kursiokai.txt"
+#define READ_LIMIT 10000000
 
 
 struct Student {
@@ -41,10 +42,6 @@ extern std::vector<std::string> gen_names(unsigned long num_of_name);
 extern int rand_int(int min, int max);
 extern std::string gen_f_name();
 extern std::string gen_l_name();
-
-// read_students.cpp
-
-extern std::vector<Student> read_students();
 
 class Timer {
     std::chrono::time_point<std::chrono::high_resolution_clock> start;
