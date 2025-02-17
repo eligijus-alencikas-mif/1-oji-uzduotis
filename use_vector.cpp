@@ -8,8 +8,9 @@ void set_student_avg(Student &student);
 void set_student_median(Student &student);
 bool student_sort_avg(Student const &lhs, Student const &rhs);
 bool student_sort_med(Student const &lhs, Student const &rhs);
+void output_students(std::vector<Student> const &students, bool out_to_file);
 
-void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file, const int sort_method) {
+void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file, const int sort_method, const bool output_to_file) {
     Timer timer;
     timer.timer_start();
     std::vector<Student> students;
@@ -70,17 +71,6 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
     timer.timer_stop();
     timer.time_include("Read time:");
 
-    cout << '\n'
-            << std::setw(NAME_LENGTH) << std::left << "Vardas"
-            << std::setw(NAME_LENGTH) << std::left << "Pavarde"
-            << "Galutinis (Vid.) Galutinis (Med.)";
-    cout << '\n';
-    const size_t line_length = (NAME_LENGTH * 2) + 33;
-    for (size_t i = 0; i < line_length; i++) {
-        cout << "-";
-    }
-    cout << '\n';
-
     timer.timer_start();
 
     for (Student &student : students) {
@@ -107,14 +97,9 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
     timer.time_include("Sorting time:");
 
     timer.timer_start();
-    for (Student const &student: students) {
-        cout << std::setw(NAME_LENGTH) << std::left << student.f_name
-                << std::setw(NAME_LENGTH) << std::left << student.l_name
-                << std::setw(17) << std::left << std::setprecision(3) << student.final_score_avg
-                << std::setprecision(3) << student.final_score_med;
-        cout << '\n';
-    }
+    output_students(students, output_to_file);
     timer.timer_stop();
+
     timer.time_include("write time:");
     timer.timer_write();
 }
@@ -141,7 +126,8 @@ void set_student_median(Student &student) {
     std::vector<int> scores = student.hw_scores;
     scores.push_back(student.exam_score);
 
-    std::sort(scores.begin(), scores.end());
+    std::nth_element(scores.begin(), scores.begin() + scores.size() / 2, scores.end());
+    // std::sort(scores.begin(), scores.end());
 
     if (scores.size() % 2 == 0) {
         student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2])/static_cast<double>(2);
@@ -164,4 +150,49 @@ bool student_sort_avg(Student const &lhs, Student const &rhs) {
 
 bool student_sort_med(Student const &lhs, Student const &rhs) {
     return lhs.final_score_med < rhs.final_score_med;
+}
+
+void output_students(std::vector<Student> const &students, bool out_to_file) {
+    if (out_to_file) {
+        std::ofstream output("out.txt");
+        output << '\n'
+                << std::setw(NAME_LENGTH) << std::left << "Vardas"
+                << std::setw(NAME_LENGTH) << std::left << "Pavarde"
+                << "Galutinis (Vid.) Galutinis (Med.)"
+                << '\n';
+        const size_t line_length = (NAME_LENGTH * 2) + 33;
+        for (size_t i = 0; i < line_length; i++) {
+            output << "-";
+        }
+        output << '\n';
+
+        for (const Student &student : students) {
+            output << std::setw(NAME_LENGTH) << std::left << student.f_name
+                    << std::setw(NAME_LENGTH) << std::left << student.l_name
+                    << std::setw(17) << std::left << std::setprecision(3) << student.final_score_avg
+                    << std::setprecision(3) << student.final_score_med
+                    << '\n';
+        }
+        output.close();
+        return;
+    }
+
+    cout << '\n'
+        << std::setw(NAME_LENGTH) << std::left << "Vardas"
+        << std::setw(NAME_LENGTH) << std::left << "Pavarde"
+        << "Galutinis (Vid.) Galutinis (Med.)";
+    cout << '\n';
+    const size_t line_length = (NAME_LENGTH * 2) + 33;
+    for (size_t i = 0; i < line_length; i++) {
+        cout << "-";
+    }
+    cout << '\n';
+
+    for (Student const &student: students) {
+        cout << std::setw(NAME_LENGTH) << std::left << student.f_name
+                << std::setw(NAME_LENGTH) << std::left << student.l_name
+                << std::setw(17) << std::left << std::setprecision(3) << student.final_score_avg
+                << std::setprecision(3) << student.final_score_med
+                << '\n';
+    }
 }

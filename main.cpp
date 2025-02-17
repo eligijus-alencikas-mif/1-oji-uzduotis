@@ -28,8 +28,9 @@ int main() {
     }
 
     int sort_method = numInput("Pasirinkite rusiavimo buda (1 - pagal varda, 2 - pagal pavarde, 3 - pagal pazymiu vidurki, 4 - pagal pazymiu mediana, 5 - nerusiuoti): ", 5, 1);
+    bool output_to_file = numInput("Pasirinkite isvesties buda (1 - terminalas, 2 - failas): ", 2, 1) == 2;
 
-    use_vector(generate_names, generate_grades, get_students_from_file, sort_method);
+    use_vector(generate_names, generate_grades, get_students_from_file, sort_method, output_to_file);
 
     return 0;
 }
