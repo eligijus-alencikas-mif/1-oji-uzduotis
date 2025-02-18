@@ -119,52 +119,56 @@ bool student_sort_med(Student const &lhs, Student const &rhs) {
 }
 
 void read_user_input(const bool &generate_names, const bool &generate_grades, std::vector<Student> &students) {
-    while (true) {
-        Student student;
-        if (generate_names) {
-            student.f_name = gen_f_name();
-            student.l_name = gen_l_name();
-            cout << "Sugeneruotas studento vardas " + student.f_name + " " + student.l_name + "\n";
-        } else {
-            student.f_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento varda: ");
-            student.l_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento pavarde: ");
-        }
-        if (generate_grades) {
-            int n = numInput("Kiek ND pazymiu generuoti studentui " + std::to_string(students.size() + 1) + "? : ",
-                             INT_MAX, 0);
-            cout << "Namu darbu pazymiai: ";
-            for (int i = 0; i < n; i++) {
-                student.hw_scores.push_back(rand_int(0, GRADE_MAX));
-                cout << student.hw_scores.at(i) << " ";
+    try {
+        while (true) {
+            Student student;
+            if (generate_names) {
+                student.f_name = gen_f_name();
+                student.l_name = gen_l_name();
+                cout << "Sugeneruotas studento vardas " + student.f_name + " " + student.l_name + "\n";
+            } else {
+                student.f_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento varda: ");
+                student.l_name = strInput("Iveskite " + std::to_string(students.size() + 1) + " studento pavarde: ");
             }
-            cout << "\n";
-        }
-        while (!generate_grades) {
-            if (
-                student.hw_scores.empty()
-                && !numInput("Ar norite ivesti namu darbu rezultatus? (1 - taip, 0 - ne): ", 1, 0)
-            )
+            if (generate_grades) {
+                int n = numInput("Kiek ND pazymiu generuoti studentui " + std::to_string(students.size() + 1) + "? : ",
+                                 INT_MAX, 0);
+                cout << "Namu darbu pazymiai: ";
+                for (int i = 0; i < n; i++) {
+                    student.hw_scores.push_back(rand_int(0, GRADE_MAX));
+                    cout << student.hw_scores.at(i) << " ";
+                }
+                cout << "\n";
+            }
+            while (!generate_grades) {
+                if (
+                    student.hw_scores.empty()
+                    && !numInput("Ar norite ivesti namu darbu rezultatus? (1 - taip, 0 - ne): ", 1, 0)
+                )
+                    break;
+                int hw_score;
+                hw_score = numInput(
+                    "Iveskite " + std::to_string(students.size() + 1) + " studento " + std::to_string(
+                        student.hw_scores.size() + 1) + " namu darbo rezultata: ",
+                    GRADE_MAX, 0);
+                student.hw_scores.push_back(hw_score);
+
+                if (!numInput("Ar norite ivesti dar viena namu darba? (1 - taip, 0 - ne): ", 1, 0))
+                    break;
+            }
+            if (generate_grades) {
+                student.exam_score = rand_int(0, GRADE_MAX);
+                cout << "Egzamino pazymys: " << student.exam_score << "\n";
+            } else {
+                student.exam_score = numInput("Iveskite egzamino rezultata: ", GRADE_MAX, 0);
+            }
+
+            students.push_back(student);
+
+            if (!numInput("Ar norite ivesti dar viena studenta? (1 - taip, 0 - ne): ", 1, 0))
                 break;
-            int hw_score;
-            hw_score = numInput(
-                "Iveskite " + std::to_string(students.size() + 1) + " studento " + std::to_string(
-                    student.hw_scores.size() + 1) + " namu darbo rezultata: ",
-                GRADE_MAX, 0);
-            student.hw_scores.push_back(hw_score);
-
-            if (!numInput("Ar norite ivesti dar viena namu darba? (1 - taip, 0 - ne): ", 1, 0))
-                break;
         }
-        if (generate_grades) {
-            student.exam_score = rand_int(0, GRADE_MAX);
-            cout << "Egzamino pazymys: " << student.exam_score << "\n";
-        } else {
-            student.exam_score = numInput("Iveskite egzamino rezultata: ", GRADE_MAX, 0);
-        }
-
-        students.push_back(student);
-
-        if (!numInput("Ar norite ivesti dar viena studenta? (1 - taip, 0 - ne): ", 1, 0))
-            break;
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << "\n";
     }
 }
