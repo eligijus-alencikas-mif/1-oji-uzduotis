@@ -12,6 +12,8 @@ class Output_students {
     bool header_done = false;
 
     public:
+    std::string error;
+
     Output_students(bool out_to_file) {
         this->out_to_file = out_to_file;
         if (out_to_file) {
@@ -25,18 +27,33 @@ class Output_students {
     }
 
     void open_file() {
-        output.open("out.txt");
+        try {
+            output.open("out.txt");
+        } catch (const std::exception &e) {
+                std::cerr << e.what() << '\n';
+                this->error = "ERROR: " + static_cast<std::string>(e.what());
+        }
     }
 
     void close_file() {
-        output.close();
+        try {
+            output.close();
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << '\n';
+            this->error = "ERROR: " + static_cast<std::string>(e.what());
+        }
     }
 
     void output_students(std::vector<Student> const &students) {
-        if (this->out_to_file) {
-            this->output_file(students);
-        }else {
-            this->output_terminal(students);
+        try {
+            if (this->out_to_file) {
+                this->output_file(students);
+            }else {
+                this->output_terminal(students);
+            }
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << '\n';
+            this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
 
