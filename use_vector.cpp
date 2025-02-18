@@ -61,6 +61,10 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
         output.output_students(students);
         counter++;
         file.clear_students();
+
+        if (!get_students_from_file) {
+            break;
+        }
     }
     timer.timer_stop();
     timer.time_include("Time taken:");
