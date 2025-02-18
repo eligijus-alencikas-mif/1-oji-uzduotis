@@ -13,6 +13,7 @@ class File_students {
 
     public:
     int iteration = 0;
+    std::string error;
 
     File_students() {
         this->openFile();
@@ -24,14 +25,24 @@ class File_students {
     }
 
     void openFile() {
-        this->file.open(INPUT_FILE_NAME);
-        if (!this->file.is_open()) {
-            std::cerr << "Unable to open file" << std::endl;
+        try{
+            this->file.open(INPUT_FILE_NAME);
+            if (!this->file.is_open()) {
+                std::cerr << "Unable to open file" << std::endl;
+            }
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << '\n';
+            this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
 
     void closeFile() {
-        this->file.close();
+        try {
+            this->file.close();
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << '\n';
+            this->error = "ERROR: " + static_cast<std::string>(e.what());
+        }
     }
 
     void count_hw() {
@@ -46,31 +57,37 @@ class File_students {
     }
 
     std::vector<Student> read_students() {
-        int counter = 0;
-        while (this->file >> this->word) {
-            Student student;
-            student.f_name = this->word;
-            this->file >> this->word;
-            student.l_name = this->word;
-
-            for (int i = 0; i < this->num_of_hw; i++) {
+        try {
+            int counter = 0;
+            while (this->file >> this->word) {
+                Student student;
+                student.f_name = this->word;
                 this->file >> this->word;
-                student.hw_scores.push_back(stoi(this->word));
+                student.l_name = this->word;
+
+                for (int i = 0; i < this->num_of_hw; i++) {
+                    this->file >> this->word;
+                    student.hw_scores.push_back(stoi(this->word));
+                }
+
+                this->file >> this->word;
+
+                student.exam_score = stoi(this->word);
+                students.push_back(student);
+                counter++;
+
+                if (counter == READ_LIMIT) {
+                    break;
+                }
+
             }
 
-            this->file >> this->word;
-
-            student.exam_score = stoi(this->word);
-            students.push_back(student);
-            counter++;
-
-            if (counter == READ_LIMIT) {
-                break;
-            }
-
+            return students;
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << '\n';
+            this->error = "ERROR: " + static_cast<std::string>(e.what());
+            return students;
         }
-
-        return students;
     }
 
     void clear_students() {
