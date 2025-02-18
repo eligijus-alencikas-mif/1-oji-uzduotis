@@ -60,6 +60,10 @@ void use_vector(const Process_settings settings) {
         output.output_students(students);
         counter++;
         file.clear_students();
+
+        if (!settings.get_students_from_file) {
+            break;
+        }
     }
     timer.timer_stop();
     timer.time_include("Time taken:");

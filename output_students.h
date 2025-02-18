@@ -1,7 +1,5 @@
 #ifndef OUTPUT_STUDENTS_H
 #define OUTPUT_STUDENTS_H
-#include <vector>
-
 #include "main.h"
 
 using std::cout;
