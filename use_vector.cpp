@@ -12,11 +12,10 @@ bool student_sort_f_name(Student const &lhs, Student const &rhs);
 bool student_sort_l_name(Student const &lhs, Student const &rhs);
 void read_user_input(const bool &generate_names, const bool &generate_grades, std::vector<Student> &students);
 
-void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file,
-                const int sort_method, const bool output_to_file) {
+void use_vector(const Process_settings settings) {
     Timer timer;
     File_students file;
-    Output_students output(output_to_file);
+    Output_students output(settings.output_to_file);
     timer.timer_start();
 
     int counter = 0;
@@ -24,10 +23,10 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
     while (true) {
         std::vector<Student> students;
 
-        if (get_students_from_file) {
+        if (settings.get_students_from_file) {
             students = file.read_students();
         }else {
-            read_user_input(generate_names, generate_grades, students);
+            read_user_input(settings.generate_names, settings.generate_grades, students);
         }
 
         if (students.empty()) {
@@ -41,7 +40,7 @@ void use_vector(const bool &generate_names, const bool &generate_grades, const b
         }
 
 
-        switch (sort_method) {
+        switch (settings.sort_method) {
             case 1:
                 std::sort(students.begin(), students.end(), student_sort_f_name);
             break;

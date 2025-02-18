@@ -18,6 +18,14 @@
 #define READ_LIMIT 10000000
 
 
+struct Process_settings {
+    bool generate_names = false;
+    bool generate_grades = false;
+    bool get_students_from_file = false;
+    int sort_method = 0;
+    bool output_to_file = false;
+};
+
 struct Student {
     std::string f_name, l_name;
     std::vector<int> hw_scores;
@@ -28,12 +36,12 @@ struct Student {
 
 // inputs.cpp
 
-extern int numInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN);
-extern std::string strInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN);
+extern int numInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN + 1);
+extern std::string strInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN + 1);
 
 // use_vector.cpp
 
-extern void use_vector(const bool &generate_names, const bool &generate_grades, const bool &get_students_from_file, int sort_method, bool output_to_file);
+extern void use_vector(Process_settings settings);
 
 // stud_gen.cpp
 
