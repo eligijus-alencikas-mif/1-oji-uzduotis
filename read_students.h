@@ -2,8 +2,10 @@
 #define READ_STUDENTS_H
 
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
+#include <iostream>
 
 class File_students {
     int num_of_hw = 0;
@@ -35,8 +37,23 @@ class File_students {
     }
 
     void count_hw() {
+        // this->num_of_hw = 0;
+        // while (this->file >> this->word) {
+        //     this->num_of_hw++;
+        //     if (this->word == "Egz.") {
+        //         break;
+        //     }
+        // }
+        // this->num_of_hw -= 3;
+
+
+        std::string line;
+        std::getline(this->file, line);
         this->num_of_hw = 0;
-        while (this->file >> this->word) {
+
+        std::istringstream iss(line);
+
+        while (iss >> this->word) {
             this->num_of_hw++;
             if (this->word == "Egz.") {
                 break;
@@ -46,31 +63,54 @@ class File_students {
     }
 
     std::vector<Student> read_students() {
+        // int counter = 0;
+        // while (this->file >> this->word) {
+        //     Student student;
+        //     student.f_name = this->word;
+        //     this->file >> this->word;
+        //     student.l_name = this->word;
+        //
+        //     for (int i = 0; i < this->num_of_hw; i++) {
+        //         this->file >> this->word;
+        //         student.hw_scores.push_back(stoi(this->word));
+        //     }
+        //
+        //     this->file >> this->word;
+        //
+        //     student.exam_score = stoi(this->word);
+        //     students.push_back(student);
+        //     counter++;
+        //
+        //     if (counter == READ_LIMIT) {
+        //         break;
+        //     }
+        //
+        // }
+
+        std::string line;
         int counter = 0;
-        while (this->file >> this->word) {
+
+        while (std::getline(this->file, line)) {
+            std::istringstream iss(line);
             Student student;
-            student.f_name = this->word;
-            this->file >> this->word;
-            student.l_name = this->word;
-
+            iss >> student.f_name >> student.l_name;
             for (int i = 0; i < this->num_of_hw; i++) {
-                this->file >> this->word;
-                student.hw_scores.push_back(stoi(this->word));
+                std::string grade;
+                iss >> grade;
+                student.hw_scores.push_back(stoi(grade));
             }
-
-            this->file >> this->word;
-
-            student.exam_score = stoi(this->word);
-            students.push_back(student);
+            std::string exam_score;
+            iss >> exam_score;
+            student.exam_score = stoi(exam_score);
+            this->students.push_back(student);
             counter++;
 
             if (counter == READ_LIMIT) {
                 break;
             }
-
         }
 
-        return students;
+        return this->students;
     }
 
     void clear_students() {
