@@ -49,28 +49,33 @@ class File_students {
     }
 
     void count_hw() {
-        // this->num_of_hw = 0;
-        // while (this->file >> this->word) {
-        //     this->num_of_hw++;
-        //     if (this->word == "Egz.") {
-        //         break;
-        //     }
-        // }
-        // this->num_of_hw -= 3;
+        try {
+            // this->num_of_hw = 0;
+            // while (this->file >> this->word) {
+            //     this->num_of_hw++;
+            //     if (this->word == "Egz.") {
+            //         break;
+            //     }
+            // }
+            // this->num_of_hw -= 3;
 
-        std::string line;
-        std::getline(this->file, line);
-        this->num_of_hw = 0;
+            std::string line;
+            std::getline(this->file, line);
+            this->num_of_hw = 0;
 
-        std::istringstream iss(line);
+            std::istringstream iss(line);
 
-        while (iss >> this->word) {
-            this->num_of_hw++;
-            if (this->word == "Egz.") {
-                break;
+            while (iss >> this->word) {
+                this->num_of_hw++;
+                if (this->word == "Egz.") {
+                    break;
+                }
             }
+            this->num_of_hw -= 3;
+        }catch (const std::exception &e) {
+            std::cerr << e.what() << '\n';
+            this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
-        this->num_of_hw -= 3;
     }
 
     std::vector<Student> read_students() {
