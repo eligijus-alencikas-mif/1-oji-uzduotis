@@ -92,7 +92,7 @@ void set_student_median(Student &student) {
     std::vector<int> scores = student.hw_scores;
     scores.push_back(student.exam_score);
 
-    std::nth_element(scores.begin(), scores.begin() + scores.size() / 2, scores.end());
+    std::sort(scores.begin(), scores.end());
 
     if (scores.size() % 2 == 0) {
         student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2]) / static_cast<double>(
