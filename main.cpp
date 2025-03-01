@@ -1,6 +1,8 @@
 #include "main.h"
 
 int main() {
+    srand(time(nullptr));
+
     int choice = numInput("Pasirinkte duomenu generavimo metoda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - skaityti is failo, 5 - baigti darba): ", 5, 1);
 
     Process_settings settings{};
