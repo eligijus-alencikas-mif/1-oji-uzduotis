@@ -1,6 +1,7 @@
 #include "main.h"
 #include "read_students.h"
 #include "output_students.h"
+#include "timer.h"
 
 using std::cout;
 
