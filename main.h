@@ -8,14 +8,13 @@
 #include <climits>
 #include <limits>
 #include <fstream>
-#include <chrono>
 
 #define NAME_LENGTH 17
 #define HW_WEIGHT 0.4
 #define EXAM_WEIGHT 0.6
 #define GRADE_MAX 10
 #define INPUT_FILE_NAME "kursiokai.txt"
-#define READ_LIMIT 10000000
+#define READ_LIMIT 100000000
 
 
 struct Process_settings {
@@ -50,34 +49,5 @@ extern std::vector<std::string> gen_names(unsigned long num_of_name);
 extern int rand_int(int min, int max);
 extern std::string gen_f_name();
 extern std::string gen_l_name();
-
-class Timer {
-    std::chrono::time_point<std::chrono::high_resolution_clock> start;
-    std::chrono::time_point<std::chrono::high_resolution_clock> end;
-    std::string content;
-
-
-public:
-    void timer_start() {
-        start = std::chrono::high_resolution_clock::now();
-    }
-
-    void timer_stop() {
-        end = std::chrono::high_resolution_clock::now();
-    }
-
-    void time_include(std::string msg) {
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(this->end - this->start);
-        msg += " (" + std::to_string(duration.count()) + " microseconds)\n";
-        content.append(msg);
-    }
-
-    void timer_write() {
-        std::ofstream log_file("times.txt");
-        log_file << this->content;
-        log_file.close();
-    }
-};
-
 
 #endif //MAIN_H
