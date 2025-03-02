@@ -11,7 +11,6 @@ int main() {
         "Pasirinkte duomenu generavimo metoda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - skaityti is failo, 5 - skaityti is sugenruoto failo, 6 - baigti darba): ",
         6, 1);
 
-
     switch (choice) {
         case 1:
             settings.generate_names = false;

@@ -9,6 +9,7 @@
 #include "students_calc.h"
 #include "process_settings.h"
 #include "student_def.h"
+#include "timer.h"
 #include <limits>
 
 #endif //MAIN_H
