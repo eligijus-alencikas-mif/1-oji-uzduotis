@@ -1,7 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <iostream>
 #include <vector>
 #include <iomanip>
 #include <algorithm>
@@ -37,13 +36,5 @@ struct Student {
 // use_vector.cpp
 
 extern void use_vector(const Process_settings &settings);
-
-// stud_gen.cpp
-
-extern std::string gen_name();
-extern std::vector<std::string> gen_names(unsigned long num_of_name);
-extern int rand_int(int min, int max);
-extern std::string gen_f_name();
-extern std::string gen_l_name();
 
 #endif //MAIN_H

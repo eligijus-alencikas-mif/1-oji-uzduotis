@@ -3,6 +3,7 @@
 #include "output_students.h"
 #include "timer.h"
 #include "inputs.h"
+#include "generator.h"
 
 using std::cout;
 
@@ -25,7 +26,6 @@ void use_vector(const Process_settings &settings) {
     File_students file;
     Output_students output(settings.output_to_file);
     timer.timer_start();
-
 
     std::vector<Student> students;
 
@@ -114,12 +114,13 @@ bool student_sort_med(Student const &lhs, Student const &rhs) {
 }
 
 void read_user_input(const bool &generate_names, const bool &generate_grades, std::vector<Student> &students) {
+    Generator gen;
     try {
         while (true) {
             Student student;
             if (generate_names) {
-                student.f_name = gen_f_name();
-                student.l_name = gen_l_name();
+                student.f_name = gen.gen_f_name();
+                student.l_name = gen.gen_l_name();
                 cout << "Sugeneruotas studento vardas " + student.f_name + " " + student.l_name + "\n";
             } else {
                 student.f_name = CLInputs::strInput(
@@ -133,7 +134,7 @@ void read_user_input(const bool &generate_names, const bool &generate_grades, st
                     INT_MAX, 0);
                 cout << "Namu darbu pazymiai: ";
                 for (int i = 0; i < n; i++) {
-                    student.hw_scores.push_back(rand_int(0, GRADE_MAX));
+                    student.hw_scores.push_back(gen.rand_int(0, GRADE_MAX));
                     cout << student.hw_scores.at(i) << " ";
                 }
                 cout << "\n";
@@ -155,7 +156,7 @@ void read_user_input(const bool &generate_names, const bool &generate_grades, st
                     break;
             }
             if (generate_grades) {
-                student.exam_score = rand_int(0, GRADE_MAX);
+                student.exam_score = gen.rand_int(0, GRADE_MAX);
                 cout << "Egzamino pazymys: " << student.exam_score << "\n";
             } else {
                 student.exam_score = CLInputs::numInput("Iveskite egzamino rezultata: ", GRADE_MAX, 0);
