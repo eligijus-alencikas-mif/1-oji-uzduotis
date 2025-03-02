@@ -1,6 +1,7 @@
 #ifndef OUTPUT_STUDENTS_H
 #define OUTPUT_STUDENTS_H
-#include "main.h"
+#include <iomanip>
+
 
 using std::cout;
 
@@ -12,7 +13,7 @@ class Output_students {
     public:
     std::string error;
 
-    Output_students(bool out_to_file) {
+    Output_students(const bool out_to_file) {
         this->out_to_file = out_to_file;
         if (out_to_file) {
             output = std::ofstream();

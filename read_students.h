@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include "student_def.h"
 
 class File_students {
     int num_of_hw = 0;

@@ -2,9 +2,9 @@
 #define FILE_GEN_H
 
 #include <fstream>
-#include <iostream>
 #include <string>
 #include "generator.h"
+#include "constant_definitions.h"
 
 class FileGen {
     public:

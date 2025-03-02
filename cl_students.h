@@ -3,11 +3,14 @@
 
 #include <vector>
 #include <iostream>
+#include <limits>
+
 #include "generator.h"
 #include "inputs.h"
-#include "main.h"
+#include "student_def.h"
 
 using std::cout;
+typedef std::numeric_limits<int> int_lim;
 
 class CL_Students {
 public:
@@ -50,9 +53,9 @@ public:
     }
 
     static void gen_grades(Student &student, const int students_size) {
-        int n = CLInputs::numInput(
+        const int n = CLInputs::numInput(
             "Kiek ND pazymiu generuoti studentui " + std::to_string(students_size + 1) + "? : ",
-            INT_MAX, 0);
+            int_lim::max(), 0);
         cout << "Namu darbu pazymiai: ";
         for (int i = 0; i < n; i++) {
             student.hw_scores.push_back(Generator::rand_int(0, GRADE_MAX));

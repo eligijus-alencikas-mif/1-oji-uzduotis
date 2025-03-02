@@ -2,7 +2,8 @@
 #define STUDENTS_CALC_H
 
 #include <vector>
-#include "main.h"
+#include <algorithm>
+#include "student_def.h"
 
 class Calc_Students {
     public:

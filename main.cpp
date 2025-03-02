@@ -1,10 +1,6 @@
 #include "main.h"
-#include "file_gen.h"
-#include "inputs.h"
-#include "read_students.h"
-#include "cl_students.h"
-#include "output_students.h"
-#include "students_calc.h"
+
+typedef std::numeric_limits<int> int_lim;
 
 int main() {
     srand(time(nullptr));
@@ -45,8 +41,8 @@ int main() {
                               2;
 
     if (settings.generate_input_file) {
-        int student_num = CLInputs::numInput("Iveskite sugeneruoto failo studentu skaiciu: ", INT_MAX, 1);
-        int hw_num = CLInputs::numInput("Iveskite sugeneruot failo namu darbu skaiciu: ", INT_MAX, 1);
+        int student_num = CLInputs::numInput("Iveskite sugeneruoto failo studentu skaiciu: ", int_lim::max(), 1);
+        int hw_num = CLInputs::numInput("Iveskite sugeneruot failo namu darbu skaiciu: ", int_lim::max(), 1);
         FileGen::gen_file(student_num, hw_num);
     }
 
