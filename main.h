@@ -23,6 +23,9 @@ struct Process_settings {
     bool get_students_from_file = false;
     int sort_method = 0;
     bool output_to_file = false;
+    bool generate_input_file = false;
+    int input_file_student_num = 0;
+    int input_file_student_hw = 0;
 };
 
 struct Student {
@@ -40,7 +43,7 @@ extern std::string strInput(const std::string &prompt, int limit_max = INT_MAX, 
 
 // use_vector.cpp
 
-extern void use_vector(Process_settings settings);
+extern void use_vector(const Process_settings &settings);
 
 // stud_gen.cpp
 

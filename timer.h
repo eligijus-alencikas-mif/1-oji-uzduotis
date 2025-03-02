@@ -10,7 +10,6 @@ class Timer {
     std::chrono::time_point<std::chrono::high_resolution_clock> end;
     std::string content;
 
-
 public:
     void timer_start() {
         start = std::chrono::high_resolution_clock::now();

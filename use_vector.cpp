@@ -13,7 +13,7 @@ bool student_sort_f_name(Student const &lhs, Student const &rhs);
 bool student_sort_l_name(Student const &lhs, Student const &rhs);
 void read_user_input(const bool &generate_names, const bool &generate_grades, std::vector<Student> &students);
 
-void use_vector(const Process_settings settings) {
+void use_vector(const Process_settings &settings) {
     Timer timer;
     File_students file;
     Output_students output(settings.output_to_file);
