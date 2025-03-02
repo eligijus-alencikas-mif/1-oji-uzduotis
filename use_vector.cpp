@@ -7,11 +7,17 @@
 using std::cout;
 
 void set_student_avg(Student &student);
+
 void set_student_median(Student &student);
+
 bool student_sort_avg(Student const &lhs, Student const &rhs);
+
 bool student_sort_med(Student const &lhs, Student const &rhs);
+
 bool student_sort_f_name(Student const &lhs, Student const &rhs);
+
 bool student_sort_l_name(Student const &lhs, Student const &rhs);
+
 void read_user_input(const bool &generate_names, const bool &generate_grades, std::vector<Student> &students);
 
 void use_vector(const Process_settings &settings) {
@@ -20,53 +26,41 @@ void use_vector(const Process_settings &settings) {
     Output_students output(settings.output_to_file);
     timer.timer_start();
 
-    int counter = 0;
 
-    while (true) {
-        std::vector<Student> students;
+    std::vector<Student> students;
 
-        if (settings.get_students_from_file) {
-            students = file.read_students();
-        }else {
-            read_user_input(settings.generate_names, settings.generate_grades, students);
-        }
-
-        if (students.empty()) {
-            break;
-        }
-
-
-        for (Student &student: students) {
-            set_student_avg(student);
-            set_student_median(student);
-        }
-
-
-        switch (settings.sort_method) {
-            case 1:
-                std::sort(students.begin(), students.end(), student_sort_f_name);
-            break;
-            case 2:
-                std::sort(students.begin(), students.end(), student_sort_l_name);
-            break;
-            case 3:
-                std::sort(students.begin(), students.end(), student_sort_avg);
-            break;
-            case 4:
-                std::sort(students.begin(), students.end(), student_sort_med);
-            break;
-            default:
-                break;
-        }
-
-        output.output_students(students);
-        counter++;
-        file.clear_students();
-
-        if (!settings.get_students_from_file) {
-            break;
-        }
+    if (settings.get_students_from_file) {
+        students = file.read_students();
+    } else {
+        read_user_input(settings.generate_names, settings.generate_grades, students);
     }
+
+
+    for (Student &student: students) {
+        set_student_avg(student);
+        set_student_median(student);
+    }
+
+
+    switch (settings.sort_method) {
+        case 1:
+            std::sort(students.begin(), students.end(), student_sort_f_name);
+            break;
+        case 2:
+            std::sort(students.begin(), students.end(), student_sort_l_name);
+            break;
+        case 3:
+            std::sort(students.begin(), students.end(), student_sort_avg);
+            break;
+        case 4:
+            std::sort(students.begin(), students.end(), student_sort_med);
+            break;
+        default:
+            break;
+    }
+
+    output.output_students(students);
+    file.clear_students();
     timer.timer_stop();
     timer.time_include("Time taken:");
     timer.timer_write();
@@ -128,12 +122,15 @@ void read_user_input(const bool &generate_names, const bool &generate_grades, st
                 student.l_name = gen_l_name();
                 cout << "Sugeneruotas studento vardas " + student.f_name + " " + student.l_name + "\n";
             } else {
-                student.f_name = CLInputs::strInput("Iveskite " + std::to_string(students.size() + 1) + " studento varda: ");
-                student.l_name = CLInputs::strInput("Iveskite " + std::to_string(students.size() + 1) + " studento pavarde: ");
+                student.f_name = CLInputs::strInput(
+                    "Iveskite " + std::to_string(students.size() + 1) + " studento varda: ");
+                student.l_name = CLInputs::strInput(
+                    "Iveskite " + std::to_string(students.size() + 1) + " studento pavarde: ");
             }
             if (generate_grades) {
-                int n = CLInputs::numInput("Kiek ND pazymiu generuoti studentui " + std::to_string(students.size() + 1) + "? : ",
-                                 INT_MAX, 0);
+                int n = CLInputs::numInput(
+                    "Kiek ND pazymiu generuoti studentui " + std::to_string(students.size() + 1) + "? : ",
+                    INT_MAX, 0);
                 cout << "Namu darbu pazymiai: ";
                 for (int i = 0; i < n; i++) {
                     student.hw_scores.push_back(rand_int(0, GRADE_MAX));

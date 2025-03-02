@@ -50,15 +50,6 @@ class File_students {
 
     void count_hw() {
         try {
-            // this->num_of_hw = 0;
-            // while (this->file >> this->word) {
-            //     this->num_of_hw++;
-            //     if (this->word == "Egz.") {
-            //         break;
-            //     }
-            // }
-            // this->num_of_hw -= 3;
-
             std::string line;
             std::getline(this->file, line);
             this->num_of_hw = 0;
@@ -81,30 +72,6 @@ class File_students {
 
     std::vector<Student> read_students() {
         try {
-            // int counter = 0;
-            // while (this->file >> this->word) {
-            //     Student student;
-            //     student.f_name = this->word;
-            //     this->file >> this->word;
-            //     student.l_name = this->word;
-            //
-            //     for (int i = 0; i < this->num_of_hw; i++) {
-            //         this->file >> this->word;
-            //         student.hw_scores.push_back(stoi(this->word));
-            //     }
-            //
-            //     this->file >> this->word;
-            //
-            //     student.exam_score = stoi(this->word);
-            //     students.push_back(student);
-            //     counter++;
-            //
-            //     if (counter == READ_LIMIT) {
-            //         break;
-            //     }
-            //
-            // }
-
             std::string line;
             int counter = 0;
 
@@ -122,10 +89,6 @@ class File_students {
                 student.exam_score = stoi(exam_score);
                 this->students.push_back(student);
                 counter++;
-
-                if (counter == READ_LIMIT) {
-                    break;
-                }
             }
 
             return this->students;

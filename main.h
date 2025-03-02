@@ -13,7 +13,6 @@
 #define EXAM_WEIGHT 0.6
 #define GRADE_MAX 10
 #define INPUT_FILE_NAME "kursiokai.txt"
-#define READ_LIMIT 100000000
 
 
 struct Process_settings {
