@@ -6,7 +6,6 @@
 #include <iomanip>
 #include <algorithm>
 #include <climits>
-#include <limits>
 #include <fstream>
 
 #define NAME_LENGTH 17
@@ -35,11 +34,6 @@ struct Student {
     double final_score_avg{};
     double final_score_med{};
 };
-
-// inputs.cpp
-
-extern int numInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN + 1);
-extern std::string strInput(const std::string &prompt, int limit_max = INT_MAX, int limit_min = INT_MIN + 1);
 
 // use_vector.cpp
 
