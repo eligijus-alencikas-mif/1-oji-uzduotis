@@ -34,7 +34,7 @@ class File_students {
                 std::cerr << "Unable to open file" << std::endl;
             }
         } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
@@ -43,7 +43,7 @@ class File_students {
         try {
             this->file.close();
         } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
@@ -73,7 +73,8 @@ class File_students {
             }
             this->num_of_hw -= 3;
         }catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
+
             this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
@@ -129,7 +130,7 @@ class File_students {
 
             return this->students;
         } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
             return students;
         }

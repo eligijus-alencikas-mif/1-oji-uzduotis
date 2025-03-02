@@ -27,7 +27,7 @@ int numInput(const std::string &prompt, int limit_max /*= INT_MAX*/, int limit_m
         }
         return num;
     } catch (const std::exception &e) {
-        std::cerr << e.what() << '\n';
+        std::cerr << "Ivyko klaida" << "\n";
         return INT_MIN;
     }
 }
@@ -56,7 +56,7 @@ std::string strInput(const std::string &prompt, int limit_max /*= INT_MAX*/, int
         }
         return str;
     } catch (const std::exception &e) {
-        std::cerr << e.what() << '\n';
+        std::cerr << "Ivyko klaida" << "\n";
         return "ERROR: " + static_cast<std::string>(e.what());
     }
 }
