@@ -7,7 +7,7 @@
 #include "constant_definitions.h"
 
 class FileGen {
-    public:
+public:
     static void gen_file(int num_students, int num_hw) {
         Generator gen;
         std::ofstream file("kursiokai.txt");

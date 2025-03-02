@@ -9,8 +9,9 @@ using std::cout;
 typedef std::numeric_limits<int> int_lim;
 
 class CLInputs {
-    public:
-    static int numInput(const std::string &prompt, const int limit_max = int_lim::max(), const int limit_min = int_lim::min()) {
+public:
+    static int numInput(const std::string &prompt, const int limit_max = int_lim::max(),
+                        const int limit_min = int_lim::min()) {
         try {
             int num;
             while (true) {
@@ -39,7 +40,8 @@ class CLInputs {
         }
     }
 
-    static std::string strInput(const std::string &prompt, const int limit_max = int_lim::max(), const int limit_min = int_lim::min()) {
+    static std::string strInput(const std::string &prompt, const int limit_max = int_lim::max(),
+                                const int limit_min = int_lim::min()) {
         try {
             std::string str;
             while (true) {

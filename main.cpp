@@ -3,12 +3,14 @@
 typedef std::numeric_limits<int> int_lim;
 
 int main() {
+    Process_settings settings{};
+
     srand(time(nullptr));
+
     int choice = CLInputs::numInput(
         "Pasirinkte duomenu generavimo metoda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - skaityti is failo, 5 - skaityti is sugenruoto failo, 6 - baigti darba): ",
         6, 1);
 
-    Process_settings settings{};
 
     switch (choice) {
         case 1:
@@ -46,7 +48,6 @@ int main() {
         FileGen::gen_file(student_num, hw_num);
     }
 
-
     std::vector<Student> students;
 
     if (settings.get_students_from_file) {
@@ -60,8 +61,31 @@ int main() {
     Calc_Students::calc_grades(students);
     Calc_Students::sort_students(students, settings.sort_method);
 
-    Output_students output(settings.output_to_file);
-    output.output_students(students);
+    std::vector<Student> high_st;
+    std::vector<Student> low_st;
+
+    for (auto student: students) {
+        if (student.final_score_avg < 5.0) {
+            low_st.push_back(student);
+        } else {
+            high_st.push_back(student);
+        }
+    }
+
+
+    Output_students output;
+
+    output.open_file("out.txt");
+    output.output_students(students, settings.output_to_file);
+    output.close_file();
+
+    output.open_file("nuskriaustukai.txt");
+    output.output_students(low_st, true);
+    output.close_file();
+
+    output.open_file("galvociai.txt");
+    output.output_students(high_st, true);
+    output.close_file();
 
     return 0;
 }

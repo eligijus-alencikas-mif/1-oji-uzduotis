@@ -6,8 +6,7 @@
 #include "student_def.h"
 
 class Calc_Students {
-    public:
-
+public:
     static void calc_grades(std::vector<Student> &students) {
         for (Student &student: students) {
             set_student_avg(student);
@@ -39,7 +38,8 @@ class Calc_Students {
         std::sort(scores.begin(), scores.end());
 
         if (scores.size() % 2 == 0) {
-            student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2]) / static_cast<double>(
+            student.final_score_med = (scores[(scores.size() / 2) - 1] + scores[scores.size() / 2]) / static_cast<
+                                          double>(
                                           2);
         } else {
             student.final_score_med = scores[(scores.size() - 1) / 2];
@@ -50,16 +50,16 @@ class Calc_Students {
         switch (sort_method) {
             case 1:
                 std::sort(students.begin(), students.end(), student_sort_f_name);
-            break;
+                break;
             case 2:
                 std::sort(students.begin(), students.end(), student_sort_l_name);
-            break;
+                break;
             case 3:
                 std::sort(students.begin(), students.end(), student_sort_avg);
-            break;
+                break;
             case 4:
                 std::sort(students.begin(), students.end(), student_sort_med);
-            break;
+                break;
             default:
                 break;
         }
@@ -81,7 +81,6 @@ class Calc_Students {
         return lhs.final_score_med < rhs.final_score_med;
     }
 };
-
 
 
 #endif //STUDENTS_CALC_H

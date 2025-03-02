@@ -32,7 +32,8 @@ class Generator {
         "Kabaila",
         "Milakna"
     };
-    public:
+
+public:
     std::string gen_f_name() const {
         return first_names[rand() % first_names.size()];
     }

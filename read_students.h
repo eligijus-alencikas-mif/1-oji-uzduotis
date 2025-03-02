@@ -14,7 +14,7 @@ class File_students {
     std::fstream file;
     std::string word;
 
-    public:
+public:
     int iteration = 0;
     std::string error;
 
@@ -28,7 +28,7 @@ class File_students {
     }
 
     void openFile() {
-        try{
+        try {
             this->file.open(INPUT_FILE_NAME);
             if (!this->file.is_open()) {
                 std::cerr << "Unable to open file" << std::endl;
@@ -63,7 +63,7 @@ class File_students {
                 }
             }
             this->num_of_hw -= 3;
-        }catch (const std::exception &e) {
+        } catch (const std::exception &e) {
             std::cerr << "Ivyko klaida" << "\n";
 
             this->error = "ERROR: " + static_cast<std::string>(e.what());
@@ -102,7 +102,6 @@ class File_students {
     void clear_students() {
         this->students.clear();
     }
-
 };
 
 #endif // READ_STUDENTS_H
