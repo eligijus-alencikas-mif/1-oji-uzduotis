@@ -7,7 +7,6 @@
 #include <sstream>
 #include <iostream>
 
-
 class File_students {
     int num_of_hw = 0;
     std::vector<Student> students;

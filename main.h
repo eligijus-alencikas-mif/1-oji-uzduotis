@@ -5,14 +5,12 @@
 #include <iomanip>
 #include <algorithm>
 #include <climits>
-#include <fstream>
 
 #define NAME_LENGTH 17
 #define HW_WEIGHT 0.4
 #define EXAM_WEIGHT 0.6
 #define GRADE_MAX 10
 #define INPUT_FILE_NAME "kursiokai.txt"
-
 
 struct Process_settings {
     bool generate_names = false;
@@ -32,9 +30,5 @@ struct Student {
     double final_score_avg{};
     double final_score_med{};
 };
-
-// use_vector.cpp
-
-extern void use_vector(const Process_settings &settings);
 
 #endif //MAIN_H
