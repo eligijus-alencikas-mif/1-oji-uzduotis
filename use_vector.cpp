@@ -73,7 +73,7 @@ void use_vector(const Process_settings &settings) {
 
 void set_student_avg(Student &student) {
     if (student.hw_scores.empty()) {
-        student.final_score_avg = 0;
+        student.final_score_avg = EXAM_WEIGHT * static_cast<double>(student.exam_score);
         return;
     }
 
@@ -85,7 +85,6 @@ void set_student_avg(Student &student) {
     }
 
     hw_avg = hw_sum / static_cast<double>(student.hw_scores.size());
-
     student.final_score_avg = HW_WEIGHT * hw_avg + EXAM_WEIGHT * static_cast<double>(student.exam_score);
 }
 
