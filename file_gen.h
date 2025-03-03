@@ -2,20 +2,32 @@
 #define FILE_GEN_H
 
 #include <fstream>
+#include <iostream>
 #include <string>
 #include "generator.h"
 #include "constant_definitions.h"
+#include "timer.h"
 
 class FileGen {
 public:
-    static void gen_file(int num_students, int num_hw) {
+    static void gen_file(std::uint64_t num_students, std::uint64_t num_hw) {
+        Timer t;
+        t.initialize_watch(1);
+
+        t.start_watch(1);
         Generator gen;
         std::ofstream file("kursiokai.txt");
         std::string content;
+        std::uint64_t reserve_size = (num_students * 35 + 7 * num_hw * num_students) + 1000;
+        std::cout << "reserve_size: " << reserve_size << std::endl;
+        content.reserve(reserve_size);
         std::string name_gap;
         int gap_size = std::to_string(num_students).length() + 1;
         for (int i = 0; i < gap_size; i++)
             name_gap.append(" ");
+        t.stop_watch(1, "initialize variables:");
+
+        t.start_watch(1);
 
         // Header
         content.append("Vardas");
@@ -27,8 +39,9 @@ public:
         for (int i = 1; i < num_hw + 1; ++i)
             content.append("ND" + std::to_string(i) + " ");
         content.append("Egzaminas\n");
+        t.stop_watch(1, "generate header:");
 
-
+        t.start_watch(1);
         // Body
         for (int i = 1; i < num_students + 1; ++i) {
             content.append("Vardas" + std::to_string(i));
@@ -50,10 +63,19 @@ public:
 
             content.append("\n");
         }
+        t.stop_watch(1, "generate body:");
 
+        std::cout << "Content size: " << content.size() << std::endl;
+        std::cout << "Content capacity: " << content.capacity() << std::endl;
+
+        t.start_watch(1);
         file << content;
+        t.stop_watch(1, "write file:");
+        t.start_watch(1);
         content.clear();
         file.close();
+        t.stop_watch(1, "clear vector and close file:");
+        t.write_to_file("generated.txt");
     }
 };
 
