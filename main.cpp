@@ -45,7 +45,12 @@ int main() {
     settings.output_to_file = CLInputs::numInput("Pasirinkite isvesties buda (1 - terminalas, 2 - failas): ", 2, 1) ==
                               2;
 
+    t.start_watch(2);
+    t.start_watch(1);
+
     if (settings.generate_input_file) {
+        t.pause_watch(1);
+        t.pause_watch(2);
         int student_num = CLInputs::numInput("Iveskite sugeneruoto failo studentu skaiciu: ", int_lim::max(), 1);
         int hw_num = CLInputs::numInput("Iveskite sugeneruot failo namu darbu skaiciu: ", int_lim::max(), 1);
         t.start_watch(2);
@@ -89,25 +94,23 @@ int main() {
 
     Output_students output;
 
-    t.start_watch(1);
-    output.open_file("out.txt");
-    output.output_students(students, settings.output_to_file);
-    output.close_file();
-    t.stop_watch(1, "Bendras isvedimas:");
-    students.clear();
+    // t.start_watch(1);
+    // output.open_file("out.txt");
+    // output.output_students(students, settings.output_to_file);
+    // output.close_file();
+    // t.stop_watch(1, "Bendras isvedimas:");
+    // students.clear();
 
     t.start_watch(1);
     output.open_file("nuskriaustukai.txt");
     output.output_students(low_st, true);
     output.close_file();
-    t.stop_watch(1, "Nuskriaustukai isvedimas:");
     low_st.clear();
 
-    t.start_watch(1);
     output.open_file("galvociai.txt");
     output.output_students(high_st, true);
     output.close_file();
-    t.stop_watch(1, "Galvociai isvedimas:");
+    t.stop_watch(1, "Bendras isvedimas:");
     high_st.clear();
 
     t.stop_watch(2, "Programos veikimo laikas:");

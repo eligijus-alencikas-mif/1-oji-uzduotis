@@ -6,8 +6,8 @@
 #include <fstream>
 
 class Stopwatch {
-    std::chrono::time_point<std::chrono::high_resolution_clock> start;
-    std::chrono::time_point<std::chrono::high_resolution_clock> end;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start{};
+    std::chrono::time_point<std::chrono::high_resolution_clock> end{};
     long time_elapsed = 0;
     bool stopped = false;
     int id;
@@ -39,6 +39,11 @@ class Stopwatch {
     }
 
     long get_time_elapsed() const {
+        if (!stopped) {
+            const auto mid = std::chrono::high_resolution_clock::now();
+            const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(mid - this->start);
+            return duration.count();
+        }
         return time_elapsed;
     }
 
