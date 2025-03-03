@@ -7,6 +7,8 @@
 #include <sstream>
 #include <iostream>
 
+#include "main.h"
+
 
 class File_students {
     int num_of_hw = 0;
@@ -31,10 +33,10 @@ class File_students {
         try{
             this->file.open(INPUT_FILE_NAME);
             if (!this->file.is_open()) {
-                std::cerr << "Unable to open file" << std::endl;
+                std::cerr << "Nebuvo galima atidaryti failo" << "\n";
             }
         } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
@@ -43,7 +45,7 @@ class File_students {
         try {
             this->file.close();
         } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
@@ -73,7 +75,7 @@ class File_students {
             }
             this->num_of_hw -= 3;
         }catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
@@ -129,7 +131,7 @@ class File_students {
 
             return this->students;
         } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
             return students;
         }

@@ -28,7 +28,7 @@ class Output_students {
         try {
             output.open("out.txt");
         } catch (const std::exception &e) {
-                std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
                 this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
@@ -37,7 +37,7 @@ class Output_students {
         try {
             output.close();
         } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }
@@ -50,7 +50,7 @@ class Output_students {
                 this->output_terminal(students);
             }
         } catch (const std::exception &e) {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
         }
     }

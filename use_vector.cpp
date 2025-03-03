@@ -169,6 +169,6 @@ void read_user_input(const bool &generate_names, const bool &generate_grades, st
                 break;
         }
     } catch (const std::exception &e) {
-        std::cerr << e.what() << "\n";
+        std::cerr << "Ivyko klaida" << "\n";
     }
 }
