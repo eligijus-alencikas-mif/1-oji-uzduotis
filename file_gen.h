@@ -19,7 +19,6 @@ public:
         std::ofstream file("kursiokai.txt");
         std::string content;
         std::uint64_t reserve_size = (num_students * 35 + 7 * num_hw * num_students) + 1000;
-        std::cout << "reserve_size: " << reserve_size << std::endl;
         content.reserve(reserve_size);
         std::string name_gap;
         int gap_size = std::to_string(num_students).length() + 1;
@@ -54,7 +53,7 @@ public:
             }
 
             for (int j = 1; j < num_hw + 2; ++j) {
-                std::string num = std::to_string(gen.rand_int(0, GRADE_MAX));
+                std::string num = std::to_string(Generator::rand_int(0, GRADE_MAX));
                 content.append(num);
                 for (int k = 0; k < std::to_string(j).size() + 3 - num.length(); ++k) {
                     content.append(" ");
@@ -64,9 +63,6 @@ public:
             content.append("\n");
         }
         t.stop_watch(1, "generate body:");
-
-        std::cout << "Content size: " << content.size() << std::endl;
-        std::cout << "Content capacity: " << content.capacity() << std::endl;
 
         t.start_watch(1);
         file << content;
