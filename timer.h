@@ -104,14 +104,10 @@ public:
         return -1;
     }
 
-    void write_to_file() {
-        std::ofstream log_file("times.txt");
+    void write_to_file(const std::string& filename) {
+        std::ofstream log_file(filename);
         log_file << this->content;
         log_file.close();
-    }
-
-    ~Timer() {
-        write_to_file();
     }
 };
 

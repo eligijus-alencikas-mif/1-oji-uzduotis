@@ -112,6 +112,6 @@ int main() {
 
     t.stop_watch(2, "Programos veikimo laikas:");
 
-    t.write_to_file();
+    t.write_to_file("laikai.txt");
     return 0;
 }
