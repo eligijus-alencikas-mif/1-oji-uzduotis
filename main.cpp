@@ -3,6 +3,10 @@
 typedef std::numeric_limits<int> int_lim;
 
 int main() {
+    Timer t;
+    t.initialize_watch(1);
+    t.initialize_watch(2);
+
     Process_settings settings{};
 
     srand(time(nullptr));
@@ -44,11 +48,16 @@ int main() {
     if (settings.generate_input_file) {
         int student_num = CLInputs::numInput("Iveskite sugeneruoto failo studentu skaiciu: ", int_lim::max(), 1);
         int hw_num = CLInputs::numInput("Iveskite sugeneruot failo namu darbu skaiciu: ", int_lim::max(), 1);
+        t.start_watch(2);
+        t.start_watch(1);
         FileGen::gen_file(student_num, hw_num);
+        t.stop_watch(1, "Failo sukurimo laikas:");
     }
+
 
     std::vector<Student> students;
 
+    t.start_watch(1);
     if (settings.get_students_from_file) {
         File_students file;
         students = file.read_students();
@@ -56,10 +65,16 @@ int main() {
     } else {
         students = CL_Students::get_user_input(settings.generate_names, settings.generate_grades);
     }
+    t.stop_watch(1, "Duomenu nuskaitymas:");
 
+    t.start_watch(1);
     Calc_Students::calc_grades(students);
+    t.stop_watch(1, "Duomenu apskaiciavimas:");
+    t.start_watch(1);
     Calc_Students::sort_students(students, settings.sort_method);
+    t.stop_watch(1, "Duomenu surusiavimas:");
 
+    t.start_watch(1);
     std::vector<Student> high_st;
     std::vector<Student> low_st;
 
@@ -70,21 +85,34 @@ int main() {
             high_st.push_back(student);
         }
     }
+    t.stop_watch(1, "Studentu iskirstymas i dvi grupes:");
 
 
     Output_students output;
 
+    t.start_watch(1);
     output.open_file("out.txt");
     output.output_students(students, settings.output_to_file);
     output.close_file();
+    t.stop_watch(1, "Bendras isvedimas:");
+    students.clear();
 
+    t.start_watch(1);
     output.open_file("nuskriaustukai.txt");
     output.output_students(low_st, true);
     output.close_file();
+    t.stop_watch(1, "Nuskriaustukai isvedimas:");
+    low_st.clear();
 
+    t.start_watch(1);
     output.open_file("galvociai.txt");
     output.output_students(high_st, true);
     output.close_file();
+    t.stop_watch(1, "Galvociai isvedimas:");
+    high_st.clear();
 
+    t.stop_watch(2, "Programos veikimo laikas:");
+
+    t.write_to_file();
     return 0;
 }

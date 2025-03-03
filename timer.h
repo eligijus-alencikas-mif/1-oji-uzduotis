@@ -35,11 +35,17 @@ class Stopwatch {
         const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(this->end - this->start);
         time_elapsed += duration.count();
         stopped = true;
-        return time_elapsed;
+        return clear_time_elapsed();
     }
 
     long get_time_elapsed() const {
         return time_elapsed;
+    }
+
+    long clear_time_elapsed() {
+        const long elapsed = time_elapsed;
+        time_elapsed = 0;
+        return elapsed;
     }
 
     int get_id() const {
@@ -77,10 +83,12 @@ public:
         return false;
     }
 
-    bool stop_watch(const int watch_id) {
+    bool stop_watch(const int watch_id, std::string msg) {
         for (auto& watch : watches) {
             if (watch.get_id() == watch_id) {
-                watch.stopwatch_stop();
+                long time = watch.stopwatch_stop();
+                msg += " (" + std::to_string(time) + " milliseconds)\n";
+                content.append(msg);
                 return true;
             }
         }
@@ -94,17 +102,6 @@ public:
             }
         }
         return -1;
-    }
-
-    bool include_to_file(std::string msg, const int watch_id) {
-        for (auto& watch : watches) {
-            if (watch.get_id() == watch_id) {
-                msg += " (" + std::to_string(watch.get_time_elapsed()) + " seconds)\n";
-                content.append(msg);
-                return true;
-            }
-        }
-        return false;
     }
 
     void write_to_file() {
