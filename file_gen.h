@@ -52,6 +52,7 @@ public:
         }
 
         file << content;
+        content.clear();
         file.close();
     }
 };
