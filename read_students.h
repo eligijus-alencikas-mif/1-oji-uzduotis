@@ -10,7 +10,7 @@
 
 class File_students {
     int num_of_hw = 0;
-    std::vector<Student> students;
+    // std::vector<Student> students;
     std::fstream file;
     std::string word;
 
@@ -70,10 +70,9 @@ public:
         }
     }
 
-    std::vector<Student> read_students() {
+    void read_students(std::vector<Student> &students) {
         try {
             std::string line;
-            int counter = 0;
 
             while (std::getline(this->file, line)) {
                 std::istringstream iss(line);
@@ -87,20 +86,12 @@ public:
                 std::string exam_score;
                 iss >> exam_score;
                 student.exam_score = stoi(exam_score);
-                this->students.push_back(student);
-                counter++;
+                students.push_back(student);
             }
-
-            return this->students;
         } catch (const std::exception &e) {
             std::cerr << "Ivyko klaida" << "\n";
             this->error = "ERROR: " + static_cast<std::string>(e.what());
-            return students;
         }
-    }
-
-    void clear_students() {
-        this->students.clear();
     }
 };
 

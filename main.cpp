@@ -60,8 +60,7 @@ int main() {
     t.start_watch(1);
     if (settings.get_students_from_file) {
         File_students file;
-        students = file.read_students();
-        file.clear_students();
+        file.read_students(students);
     } else {
         students = CL_Students::get_user_input(settings.generate_names, settings.generate_grades);
     }
