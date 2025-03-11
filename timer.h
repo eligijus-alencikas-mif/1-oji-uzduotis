@@ -5,7 +5,10 @@
 #include <string>
 #include <fstream>
 
+using accuracy = std::chrono::milliseconds;
+
 class Stopwatch {
+
     std::chrono::time_point<std::chrono::high_resolution_clock> start{};
     std::chrono::time_point<std::chrono::high_resolution_clock> end{};
     long time_elapsed = 0;
@@ -22,7 +25,7 @@ class Stopwatch {
 
     void stopwatch_pause() {
         this->end = std::chrono::high_resolution_clock::now();
-        const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(this->end - this->start);
+        const auto duration = std::chrono::duration_cast<accuracy>(this->end - this->start);
         time_elapsed += duration.count();
         stopped = true;
     }
@@ -32,7 +35,7 @@ class Stopwatch {
             return time_elapsed;
         }
         this->end = std::chrono::high_resolution_clock::now();
-        const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(this->end - this->start);
+        const auto duration = std::chrono::duration_cast<accuracy>(this->end - this->start);
         time_elapsed += duration.count();
         stopped = true;
         return clear_time_elapsed();
@@ -41,7 +44,7 @@ class Stopwatch {
     long get_time_elapsed() const {
         if (!stopped) {
             const auto mid = std::chrono::high_resolution_clock::now();
-            const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(mid - this->start);
+            const auto duration = std::chrono::duration_cast<accuracy>(mid - this->start);
             return duration.count();
         }
         return time_elapsed;
@@ -92,7 +95,7 @@ public:
         for (auto& watch : watches) {
             if (watch.get_id() == watch_id) {
                 long time = watch.stopwatch_stop();
-                msg += " (" + std::to_string(time) + " milliseconds)\n";
+                msg += " (" + std::to_string(time) + " microseconds)\n";
                 content.append(msg);
                 return true;
             }

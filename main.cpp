@@ -12,7 +12,7 @@ int main() {
     srand(time(nullptr));
 
     int choice = CLInputs::numInput(
-        "Pasirinkte duomenu generavimo metoda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - skaityti is failo, 5 - skaityti is sugenruoto failo, 6 - baigti darba): ",
+        "Pasirinkte duomenu generavimo metoda (1 - Ranka, 2 - Generuoti pazymius, 3 - Generuoti ir pazymius ir studentu vardus, pavardes, 4 - Skaityti is failo, 5 - Generuoti faila, 6 - Baigti darba): ",
         6, 1);
 
     switch (choice) {
@@ -32,39 +32,40 @@ int main() {
             settings.get_students_from_file = true;
             break;
         case 5:
-            settings.get_students_from_file = true;
             settings.generate_input_file = true;
             break;
         default:
             return 0;
     }
 
-    settings.sort_method = CLInputs::numInput(
-        "Pasirinkite rusiavimo buda (1 - pagal varda, 2 - pagal pavarde, 3 - pagal pazymiu vidurki, 4 - pagal pazymiu mediana, 5 - nerusiuoti): ",
-        5, 1);
-    settings.output_to_file = CLInputs::numInput("Pasirinkite isvesties buda (1 - terminalas, 2 - failas): ", 2, 1) ==
-                              2;
-
-    t.start_watch(2);
-    t.start_watch(1);
-
     if (settings.generate_input_file) {
-        t.pause_watch(1);
-        t.pause_watch(2);
         int student_num = CLInputs::numInput("Iveskite sugeneruoto failo studentu skaiciu: ", int_lim::max(), 1);
         int hw_num = CLInputs::numInput("Iveskite sugeneruot failo namu darbu skaiciu: ", int_lim::max(), 1);
-        t.start_watch(2);
+
         t.start_watch(1);
         FileGen::gen_file(student_num, hw_num);
         t.stop_watch(1, "Failo sukurimo laikas:");
+        cout << "Baigtas failu kurimas\n";
+        t.write_to_file("file-gen.txt");
+        return 0;
     }
 
+    if (settings.get_students_from_file) {
+        settings.input_file_name = CLInputs::strInput("Iveskite nuskaitomo failo pavadinima: ");
+    }
+
+    settings.sort_method = CLInputs::numInput(
+"Pasirinkite rusiavimo buda (1 - pagal varda, 2 - pagal pavarde, 3 - pagal pazymiu vidurki, 4 - pagal pazymiu mediana, 5 - nerusiuoti): ",
+5, 1);
+    settings.output_to_file = CLInputs::numInput("Pasirinkite isvesties buda (1 - terminalas, 2 - failas): ", 2, 1) ==
+                              2;
+    t.start_watch(2);
 
     std::vector<Student> students;
 
     t.start_watch(1);
     if (settings.get_students_from_file) {
-        File_students file;
+        File_students file(settings.input_file_name);
         file.read_students(students);
     } else {
         students = CL_Students::get_user_input(settings.generate_names, settings.generate_grades);
@@ -94,12 +95,12 @@ int main() {
 
     Output_students output;
 
-    // t.start_watch(1);
-    // output.open_file("out.txt");
-    // output.output_students(students, settings.output_to_file);
-    // output.close_file();
-    // t.stop_watch(1, "Bendras isvedimas:");
-    // students.clear();
+    t.start_watch(1);
+    output.open_file("out.txt");
+    output.output_students(students, settings.output_to_file);
+    output.close_file();
+    t.stop_watch(1, "Bendras isvedimas:");
+    students.clear();
 
     t.start_watch(1);
     output.open_file("nuskriaustukai.txt");

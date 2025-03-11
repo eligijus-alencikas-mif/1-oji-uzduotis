@@ -18,8 +18,8 @@ public:
     int iteration = 0;
     std::string error;
 
-    File_students() {
-        this->openFile();
+    File_students(const std::string& file_name) {
+        this->openFile(file_name);
         this->count_hw();
     }
 
@@ -27,9 +27,9 @@ public:
         this->closeFile();
     }
 
-    void openFile() {
+    void openFile(const std::string& file_name) {
         try {
-            this->file.open(INPUT_FILE_NAME);
+            this->file.open(file_name);
             if (!this->file.is_open()) {
                 std::cerr << "Unable to open file" << std::endl;
             }
