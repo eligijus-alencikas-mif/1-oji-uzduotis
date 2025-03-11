@@ -41,11 +41,12 @@ int main() {
     if (settings.generate_input_file) {
         int student_num = CLInputs::numInput("Iveskite sugeneruoto failo studentu skaiciu: ", int_lim::max(), 1);
         int hw_num = CLInputs::numInput("Iveskite sugeneruot failo namu darbu skaiciu: ", int_lim::max(), 1);
+        std::string file_name = CLInputs::strInput("Iveskite sugeneruoto failo pavadinima: ");
 
         t.start_watch(1);
-        FileGen::gen_file(student_num, hw_num);
+        FileGen::gen_file(student_num, hw_num, file_name);
         t.stop_watch(1, "Failo sukurimo laikas:");
-        cout << "Baigtas failu kurimas\n";
+        cout << "Baigtas failo kurimas\n";
         t.write_to_file("file-gen.txt");
         return 0;
     }
