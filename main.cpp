@@ -22,7 +22,7 @@ int main() {
             settings.get_students_from_file = false;
             break;
         case 2:
-            settings.generate_names = true;
+            settings.generate_grades = true;
             break;
         case 3:
             settings.generate_names = true;
