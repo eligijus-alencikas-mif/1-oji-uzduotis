@@ -74,7 +74,7 @@ bool Timer::stop_watch(const int watch_id, std::string msg) {
     for (auto& watch : watches) {
         if (watch.get_id() == watch_id) {
             long time = watch.stopwatch_stop();
-            msg += " (" + std::to_string(time) + " microseconds)\n";
+            msg += " (" + std::to_string(time) + " milliseconds)\n";
             content.append(msg);
             return true;
         }

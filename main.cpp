@@ -54,12 +54,11 @@ int main() {
     if (settings.get_students_from_file) {
         settings.input_file_name = CLInputs::strInput("Iveskite nuskaitomo failo pavadinima: ");
     }
-
     settings.sort_method = CLInputs::numInput(
 "Pasirinkite rusiavimo buda (1 - pagal varda, 2 - pagal pavarde, 3 - pagal pazymiu vidurki, 4 - pagal pazymiu mediana, 5 - nerusiuoti): ",
 5, 1);
     settings.output_to_file = CLInputs::numInput("Pasirinkite isvesties buda (1 - terminalas, 2 - failas): ", 2, 1) ==
-                              2;
+                               2;
     t.start_watch(2);
 
     std::vector<Student> students;
