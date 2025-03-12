@@ -13,7 +13,7 @@ void File_students::openFile(const std::string& file_name) {
     try {
         this->file.open(file_name);
         if (!this->file.is_open()) {
-            std::cerr << "Unable to open file" << std::endl;
+            std::cerr << "Nebuvo galima atidaryti failo" << std::endl;
         }
     } catch (const std::exception &e) {
         std::cerr << "Ivyko klaida" << "\n";
