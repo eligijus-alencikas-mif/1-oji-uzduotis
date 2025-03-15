@@ -7,3 +7,7 @@ kursiokai.txt
 *.exe
 *.gch
 *.txt
+*.out
+/build
+!CMakeLists.txt
+/.vscode
