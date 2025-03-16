@@ -5,6 +5,12 @@ typedef std::numeric_limits<int> int_lim;
 int main()
 {
     Timer t;
+    std::string watch_name = "Nuskaitymas";
+    t.initialize_watch(1, watch_name);
+    watch_name = "Rusiavimas";
+    t.initialize_watch(2, watch_name);
+    watch_name = "Skirstymas";
+    t.initialize_watch(3, watch_name);
 
     Process_settings settings{};
 
@@ -58,8 +64,10 @@ int main()
 
     if (settings.get_students_from_file)
     {
+        t.start_watch(1);
         File_students file(settings.input_file_name);
         file.read_students(students);
+        t.pause_watch(1);
 
         if (!file.file_opened)
             return 0;
@@ -84,11 +92,14 @@ int main()
             settings.generate_grades);
     }
     Calc_Students::calc_grades(students);
+    t.start_watch(2);
     Calc_Students::sort_students(students, settings.sort_method);
+    t.pause_watch(2);
 
     std::vector<Student> high_st;
     std::vector<Student> low_st;
 
+    t.start_watch(3);
     for (auto student : students)
     {
         if (student.final_score_avg < 5.0)
@@ -100,6 +111,7 @@ int main()
             high_st.push_back(student);
         }
     }
+    t.pause_watch(3);
 
     Output_students output;
 
@@ -120,5 +132,6 @@ int main()
     output.close_file();
     high_st.clear();
 
+    t.write_times("laikai.txt");
     return 0;
 }

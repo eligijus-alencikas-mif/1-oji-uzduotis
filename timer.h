@@ -6,17 +6,19 @@
 #include <fstream>
 #include <vector>
 
-using accuracy = std::chrono::milliseconds;
+using accuracy = std::chrono::nanoseconds;
 
-class Stopwatch {
+class Stopwatch
+{
     std::chrono::time_point<std::chrono::high_resolution_clock> start{};
     std::chrono::time_point<std::chrono::high_resolution_clock> end{};
     long time_elapsed = 0;
     bool stopped = false;
+    std::string name;
     int id;
 
-    public:
-    explicit Stopwatch(int _id);
+public:
+    explicit Stopwatch(int _id, std::string _name);
 
     void stopwatch_start();
     void stopwatch_pause();
@@ -27,19 +29,19 @@ class Stopwatch {
     int get_id() const;
 };
 
-class Timer {
+class Timer
+{
     std::string content;
     std::vector<Stopwatch> watches;
 
 public:
-    void initialize_watch(int watch_id);
+    void initialize_watch(int watch_id, std::string &watch_name);
     bool start_watch(int watch_id);
     bool pause_watch(int watch_id);
     bool stop_watch(int watch_id, std::string msg);
     long get_time_elapsed(int watch_id) const;
-    void write_to_file(const std::string& filename) const;
-
-
+    void write_to_file(const std::string &filename) const;
+    void write_times(const std::string &filename) const;
 };
 
-#endif //TIMER_H
+#endif // TIMER_H

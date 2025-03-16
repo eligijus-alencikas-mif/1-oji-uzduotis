@@ -1,8 +1,9 @@
-# filepath: /home/eli/Projects/1-oji-uzduotis/CMakeLists.txt
 cmake_minimum_required(VERSION 3.10)
 project(1-oji-uzduotis)
 
 set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_CXX_FLAGS "-O3")
 
 # Add the executable
 add_executable(1-oji-uzduotis
