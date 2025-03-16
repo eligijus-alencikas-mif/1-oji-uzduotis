@@ -10,4 +10,5 @@ kursiokai.txt
 *.out
 /build
 !CMakeLists.txt
+!test/test_cases/*
 /.vscode
