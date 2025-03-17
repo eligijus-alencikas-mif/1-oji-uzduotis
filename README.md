@@ -1,5 +1,10 @@
 # Tyrimai
 
+### Matavimo sistemos parametrai:
+  > __CPU__: 7800x3d \
+  > __RAM__: 32GB | 6000 MT/s \
+  > __SSD__: NVMe M.2 | 7,000/7,000MB/s read/write
+
 ## Pirmas tyrimas (Failų kūrimas ir jų uždarymas)
 * Kiekvienas studentas turi po 10 namų darbų rezultatų + egzaminas
 * Laiko matavimui naudoajam `chrono` biblioteka
