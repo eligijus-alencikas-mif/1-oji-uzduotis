@@ -6,7 +6,7 @@
 #include <fstream>
 #include <vector>
 
-using accuracy = std::chrono::microseconds;
+using accuracy = std::chrono::milliseconds;
 
 class Stopwatch
 {

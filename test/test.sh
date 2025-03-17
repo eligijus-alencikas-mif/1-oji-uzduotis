@@ -39,4 +39,4 @@ echo  >> ./test_res.txt
 done
 
 rm ./out.txt ./laikai.txt ./nuskriaustukai.txt ./galvociai.txt
-./time-table μs
+./time-table ms
