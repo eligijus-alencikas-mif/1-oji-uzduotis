@@ -24,7 +24,7 @@
 * Matavimai atliekami penkis kartus ir iš jų išgaunami vidurkiai
 * Matuojami vykdomi su penkiais skirtingais matavimo dydžiais
 * Kodas buvo sukompiliuotas naudojant -O3 gaire
-* Matuojas:
+* Matuojami:
   * nuskaitymas iš failo
   * studentų rūšiavimą į dvi grupes/kategorijas
   * surūšiuotų studentų išvedimą į du naujus failus
@@ -133,3 +133,88 @@
 | Nuskaitymas | 4414 ms  | 4401 ms  | 4396 ms  | 4444 ms  | 4414 ms  | 4413 ms   |
 | Rušiavimas  | 1743 ms  | 1665 ms  | 1729 ms  | 1722 ms  | 1660 ms  | 1703 ms   |
 | Rikiavimas  | 1350 ms  | 1357 ms  | 1348 ms  | 1343 ms  | 1350 ms  | 1349 ms   |
+
+## Naudojant `std::list`
+
+### 1,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 560 μs   | 576 μs   | 606 μs   | 485 μs   | 594 μs   | 564 μs    |
+| Rušiavimas  | 52 μs    | 64 μs    | 66 μs    | 52 μs    | 65 μs    | 59 μs     |
+| Rikiavimas  | 99 μs    | 121 μs   | 119 μs   | 94 μs    | 126 μs   | 111 μs    |
+
+### 10,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 4843 μs  | 5330 μs  | 4923 μs  | 4755 μs  | 5391 μs  | 5048 μs   |
+| Rušiavimas  | 761 μs   | 738 μs   | 756 μs   | 757 μs   | 735 μs   | 749 μs    |
+| Rikiavimas  | 1005 μs  | 1068 μs  | 894 μs   | 882 μs   | 963 μs   | 962 μs    |
+
+### 100,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 47977 μs | 47000 μs | 48757 μs | 49032 μs | 59094 μs | 50372 μs  |
+| Rušiavimas  | 12449 μs | 12087 μs | 12294 μs | 12273 μs | 12074 μs | 12235 μs  |
+| Rikiavimas  | 9721 μs  | 9184 μs  | 10342 μs | 9746 μs  | 9834 μs  | 9765 μs   |
+
+### 1,000,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 476 ms   | 472 ms   | 477 ms   | 477 ms   | 473 ms   | 475 ms    |
+| Rušiavimas  | 285 ms   | 233 ms   | 256 ms   | 243 ms   | 233 ms   | 250 ms    |
+| Rikiavimas  | 167 ms   | 155 ms   | 168 ms   | 165 ms   | 162 ms   | 163 ms    |
+
+### 10,000,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 4643 ms  | 4681 ms  | 4723 ms  | 4707 ms  | 4613 ms  | 4673 ms   |
+| Rušiavimas  | 5225 ms  | 5597 ms  | 5502 ms  | 5185 ms  | 5349 ms  | 5371 ms   |
+| Rikiavimas  | 1647 ms  | 1710 ms  | 1669 ms  | 1654 ms  | 1658 ms  | 1667 ms   |
+
+
+## Naudojant `std::deque`
+
+### 1,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 589 μs   | 511 μs   | 480 μs   | 565 μs   | 593 μs   | 547 μs    |
+| Rušiavimas  | 133 μs   | 108 μs   | 100 μs   | 124 μs   | 126 μs   | 118 μs    |
+| Rikiavimas  | 102 μs   | 84 μs    | 81 μs    | 99 μs    | 91 μs    | 91 μs     |
+
+### 10,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 4974 μs  | 4865 μs  | 4524 μs  | 4909 μs  | 4793 μs  | 4813 μs   |
+| Rušiavimas  | 1103 μs  | 1213 μs  | 1129 μs  | 1070 μs  | 1106 μs  | 1124 μs   |
+| Rikiavimas  | 891 μs   | 814 μs   | 760 μs   | 852 μs   | 768 μs   | 817 μs    |
+
+### 100,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 45226 μs | 45315 μs | 57134 μs | 46732 μs | 45353 μs | 47952 μs  |
+| Rušiavimas  | 13310 μs | 13076 μs | 13947 μs | 12625 μs | 12929 μs | 13177 μs  |
+| Rikiavimas  | 8509 μs  | 8437 μs  | 8048 μs  | 8168 μs  | 8224 μs  | 8277 μs   |
+
+### 1,000,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 453 ms   | 461 ms   | 458 ms   | 452 ms   | 453 ms   | 455 ms    |
+| Rušiavimas  | 159 ms   | 166 ms   | 155 ms   | 164 ms   | 164 ms   | 161 ms    |
+| Rikiavimas  | 128 ms   | 132 ms   | 140 ms   | 136 ms   | 127 ms   | 132 ms    |
+
+### 10,000,000 studentų
+
+| Matavimas   | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-------------|----------|----------|----------|----------|----------|-----------|
+| Nuskaitymas | 4520 ms  | 4489 ms  | 4540 ms  | 4530 ms  | 5122 ms  | 4640 ms   |
+| Rušiavimas  | 2040 ms  | 1952 ms  | 1952 ms  | 1982 ms  | 1969 ms  | 1979 ms   |
+| Rikiavimas  | 1496 ms  | 1479 ms  | 1503 ms  | 1482 ms  | 1500 ms  | 1492 ms   |
