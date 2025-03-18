@@ -223,3 +223,28 @@
 | Nuskaitymas | 4520 ms  | 4489 ms  | 4540 ms  | 4530 ms  | 5122 ms  | 4640 ms   |
 | Rušiavimas  | 2040 ms  | 1952 ms  | 1952 ms  | 1982 ms  | 1969 ms  | 1979 ms   |
 | Skirstymas  | 1496 ms  | 1479 ms  | 1503 ms  | 1482 ms  | 1500 ms  | 1492 ms   |
+
+## Ketvirtas tyrimas (Rūšiavimas (sort))
+
+* Testai vyks su 10,000,000 studentu failu
+
+### vector
+
+| Matavimas | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-----------|----------|----------|----------|----------|----------|-----------|
+| {R1}      | 688 ms   | 683 ms   | 697 ms   | 687 ms   | 682 ms   | 687 ms    |
+| {R2}      | 539 ms   | 548 ms   | 547 ms   | 541 ms   | 542 ms   | 543 ms    |
+
+### list
+
+| Matavimas | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-----------|----------|----------|----------|----------|----------|-----------|
+| {R1}      | 912 ms   | 916 ms   | 933 ms   | 915 ms   | 929 ms   | 921 ms    |
+| {R1}      | 175 ms   | 170 ms   | 179 ms   | 173 ms   | 175 ms   | 174 ms    |
+<!-- Make sure the output for method 2 is correct -->
+
+### deque
+
+| Matavimas | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|-----------|----------|----------|----------|----------|----------|-----------|
+| {R1}      | 822 ms   | 829 ms   | 833 ms   | 834 ms   | 821 ms   | 827 ms    |

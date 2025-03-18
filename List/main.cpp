@@ -5,12 +5,8 @@ typedef std::numeric_limits<int> int_lim;
 int main()
 {
     Timer t;
-    std::string watch_name = "Nuskaitymas";
+    std::string watch_name = "Skirstymas";
     t.initialize_watch(1, watch_name);
-    watch_name = "Rusiavimas";
-    t.initialize_watch(2, watch_name);
-    watch_name = "Skirstymas";
-    t.initialize_watch(3, watch_name);
 
     Process_settings settings{};
 
@@ -64,10 +60,8 @@ int main()
 
     if (settings.get_students_from_file)
     {
-        t.start_watch(1);
         File_students file(settings.input_file_name);
         file.read_students(students);
-        t.pause_watch(1);
 
         if (!file.file_opened)
             return 0;
@@ -96,22 +90,8 @@ int main()
     Calc_Students::sort_students(students, settings.sort_method);
     t.pause_watch(2);
 
-    std::list<Student> high_st;
+    // std::list<Student> high_st;
     std::list<Student> low_st;
-
-    t.start_watch(3);
-    for (auto student : students)
-    {
-        if (student.final_score_avg < 5.0)
-        {
-            low_st.push_back(student);
-        }
-        else
-        {
-            high_st.push_back(student);
-        }
-    }
-    t.pause_watch(3);
 
     Output_students output;
 
@@ -120,7 +100,46 @@ int main()
     output.output_students(students, settings.output_to_file);
     if (settings.output_to_file)
         output.close_file();
-    students.clear();
+
+    t.start_watch(1);
+    // for (auto student : students)
+    // {
+    //     if (student.final_score_avg < 5.0)
+    //     {
+    //         low_st.push_back(student);
+    //     }
+    //     else
+    //     {
+    //         high_st.push_back(student);
+    //     }
+    // }
+
+    for (std::list<Student>::iterator it = students.begin(); it != students.end();)
+    {
+        if (it->final_score_avg < 5.0)
+        {
+            low_st.push_back(*it);
+            it = students.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
+    // for (auto &student : students)
+    // {
+    //     if (student.final_score_avg < 5.0)
+    //     {
+    //         low_st.push_back(student);
+    //     }
+    //     else
+    //     {
+    //         students.erase(student);
+    //     }
+    // }
+
+    t.pause_watch(1);
 
     output.open_file("nuskriaustukai.txt");
     output.output_students(low_st, true);
@@ -128,9 +147,9 @@ int main()
     low_st.clear();
 
     output.open_file("galvociai.txt");
-    output.output_students(high_st, true);
+    output.output_students(students, true);
     output.close_file();
-    high_st.clear();
+    students.clear();
 
     t.write_times("laikai.txt");
     return 0;

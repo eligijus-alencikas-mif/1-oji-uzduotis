@@ -5,12 +5,8 @@ typedef std::numeric_limits<int> int_lim;
 int main()
 {
     Timer t;
-    std::string watch_name = "Nuskaitymas";
+    std::string watch_name = "Skirstymas";
     t.initialize_watch(1, watch_name);
-    watch_name = "Rusiavimas";
-    t.initialize_watch(2, watch_name);
-    watch_name = "Skirstymas";
-    t.initialize_watch(3, watch_name);
 
     Process_settings settings{};
 
@@ -64,10 +60,8 @@ int main()
 
     if (settings.get_students_from_file)
     {
-        t.start_watch(1);
         File_students file(settings.input_file_name);
         file.read_students(students);
-        t.pause_watch(1);
 
         if (!file.file_opened)
             return 0;
@@ -99,7 +93,7 @@ int main()
     std::deque<Student> high_st;
     std::deque<Student> low_st;
 
-    t.start_watch(3);
+    t.start_watch(1);
     for (auto student : students)
     {
         if (student.final_score_avg < 5.0)
@@ -111,7 +105,7 @@ int main()
             high_st.push_back(student);
         }
     }
-    t.pause_watch(3);
+    t.pause_watch(1);
 
     Output_students output;
 

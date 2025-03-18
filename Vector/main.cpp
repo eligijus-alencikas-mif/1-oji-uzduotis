@@ -5,8 +5,8 @@ typedef std::numeric_limits<int> int_lim;
 int main()
 {
     Timer t;
-    std::string watch_name = "Rusiavimas";
-    t.initialize_watch(2, watch_name);
+    std::string watch_name = "Skirstymas";
+    t.initialize_watch(1, watch_name);
 
     Process_settings settings{};
 
@@ -86,24 +86,10 @@ int main()
             settings.generate_grades);
     }
     Calc_Students::calc_grades(students);
-    t.start_watch(2);
     Calc_Students::sort_students(students, settings.sort_method);
-    t.pause_watch(2);
 
-    std::vector<Student> high_st;
     std::vector<Student> low_st;
-
-    for (auto student : students)
-    {
-        if (student.final_score_avg < 5.0)
-        {
-            low_st.push_back(student);
-        }
-        else
-        {
-            high_st.push_back(student);
-        }
-    }
+    std::vector<Student> high_st;
 
     Output_students output;
 
@@ -112,7 +98,37 @@ int main()
     output.output_students(students, settings.output_to_file);
     if (settings.output_to_file)
         output.close_file();
-    students.clear();
+
+    t.start_watch(1);
+
+    // for (auto student : students)
+    // {
+    //     if (student.final_score_avg < 5.0)
+    //     {
+    //         low_st.push_back(student);
+    //     }
+    //     else
+    //     {
+    //         high_st.push_back(student);
+    //     }
+    // }
+
+    size_t students_new_size = 0;
+    for (size_t i = 0; i < students.size(); i++)
+    {
+        auto student = students[i];
+        if (student.final_score_avg < 5.0)
+        {
+            low_st.push_back(student);
+        }
+        else
+        {
+            students.at(students_new_size++) = student;
+        }
+    }
+    students.resize(students_new_size);
+
+    t.pause_watch(1);
 
     output.open_file("nuskriaustukai.txt");
     output.output_students(low_st, true);
@@ -122,7 +138,7 @@ int main()
     output.open_file("galvociai.txt");
     output.output_students(high_st, true);
     output.close_file();
-    high_st.clear();
+    students.clear();
 
     t.write_times("laikai.txt");
     return 0;
