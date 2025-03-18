@@ -89,7 +89,7 @@ int main()
     Calc_Students::sort_students(students, settings.sort_method);
 
     std::vector<Student> low_st;
-    std::vector<Student> high_st;
+    // std::vector<Student> high_st;
 
     Output_students output;
 
@@ -136,7 +136,7 @@ int main()
     low_st.clear();
 
     output.open_file("galvociai.txt");
-    output.output_students(high_st, true);
+    output.output_students(students, true);
     output.close_file();
     students.clear();
 
