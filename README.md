@@ -240,11 +240,12 @@
 | Matavimas | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
 |-----------|----------|----------|----------|----------|----------|-----------|
 | {R1}      | 912 ms   | 916 ms   | 933 ms   | 915 ms   | 929 ms   | 921 ms    |
-| {R1}      | 175 ms   | 170 ms   | 179 ms   | 173 ms   | 175 ms   | 174 ms    |
-<!-- Make sure the output for method 2 is correct -->
+| {R2}      | 175 ms   | 170 ms   | 179 ms   | 173 ms   | 175 ms   | 174 ms    |
 
 ### deque
 
 | Matavimas | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
 |-----------|----------|----------|----------|----------|----------|-----------|
 | {R1}      | 822 ms   | 829 ms   | 833 ms   | 834 ms   | 821 ms   | 827 ms    |
+| {R2}      | 245 ms   | 240 ms   | 241 ms   | 236 ms   | 240 ms   | 240 ms    |
+

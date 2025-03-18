@@ -90,22 +90,8 @@ int main()
     Calc_Students::sort_students(students, settings.sort_method);
     t.pause_watch(2);
 
-    std::deque<Student> high_st;
+    // std::deque<Student> high_st;
     std::deque<Student> low_st;
-
-    t.start_watch(1);
-    for (auto student : students)
-    {
-        if (student.final_score_avg < 5.0)
-        {
-            low_st.push_back(student);
-        }
-        else
-        {
-            high_st.push_back(student);
-        }
-    }
-    t.pause_watch(1);
 
     Output_students output;
 
@@ -114,7 +100,53 @@ int main()
     output.output_students(students, settings.output_to_file);
     if (settings.output_to_file)
         output.close_file();
-    students.clear();
+
+    t.start_watch(1);
+
+    auto size = students.size();
+    for (size_t i = 0; i < size; i++)
+    {
+        if (students.front().final_score_avg < 5.0)
+        {
+            low_st.push_back(students.front());
+        }
+        else
+        {
+            students.push_back(students.front());
+        }
+        students.pop_front();
+    }
+
+    // auto end = students.end();
+    // for (auto it = students.begin(); it != end;)
+    // {
+    //     if (it->final_score_avg < 5.0)
+    //     {
+    //         low_st.push_back(*it);
+    //         // it = students.erase(it);
+    //     }
+    //     else
+    //     {
+    //         students.push_back(*it);
+    //         students.pop_front();
+    //         ++it;
+    //     }
+    // }
+
+    // for (auto student : students)
+    // {
+    //     if (student.final_score_avg < 5.0)
+    //     {
+    //         low_st.push_back(student);
+    //     }
+    //     else
+    //     {
+    //         students.push_back(student);
+    //         students.pop_front();
+    //         // high_st.push_back(student);
+    //     }
+    // }
+    t.pause_watch(1);
 
     output.open_file("nuskriaustukai.txt");
     output.output_students(low_st, true);
@@ -122,9 +154,9 @@ int main()
     low_st.clear();
 
     output.open_file("galvociai.txt");
-    output.output_students(high_st, true);
+    output.output_students(students, true);
     output.close_file();
-    high_st.clear();
+    students.clear();
 
     t.write_times("laikai.txt");
     return 0;
