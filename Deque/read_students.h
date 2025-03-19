@@ -21,8 +21,10 @@ public:
     bool file_opened = false;
 
     explicit File_students(const std::string &file_name);
+    explicit File_students();
     ~File_students();
 
+    void open(const std::string &file_name);
     void openFile(const std::string &file_name);
     void closeFile();
     void count_hw();

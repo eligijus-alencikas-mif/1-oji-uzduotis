@@ -51,46 +51,42 @@ int main()
         return 0;
     }
 
+    std::list<Student> students;
+    File_students file;
+
     if (settings.get_students_from_file)
     {
         settings.input_file_name = CLInputs::strInput("Iveskite nuskaitomo failo pavadinima: ");
+        file.open(settings.input_file_name);
+        if (!file.file_opened)
+            return 0;
     }
 
-    std::list<Student> students;
+    settings.sort_method = CLInputs::numInput(
+        "Pasirinkite rusiavimo buda (1 - pagal varda, 2 - pagal pavarde, 3 - pagal pazymiu vidurki, 4 - pagal pazymiu mediana, 5 - nerusiuoti): ",
+        5, 1);
+    settings.output_to_file = CLInputs::numInput("Pasirinkite isvesties buda (1 - terminalas, 2 - failas): ", 2, 1) ==
+                              2;
+
+    settings.distribution_strategy = CLInputs::numInput(
+        "Pasirinkite skirstymo strategija (1 - Skirstymas į du naujus konteinerius, 2 - Skirstmas panaudojant tik vieną naują konteinerį, 3 - Skirstymas įtraukiant \"efektyvaus\" darbo su konteineriais metodus): ",
+        3, 1);
 
     if (settings.get_students_from_file)
     {
-        File_students file(settings.input_file_name);
         file.read_students(students);
-
-        if (!file.file_opened)
-            return 0;
-
-        settings.sort_method = CLInputs::numInput(
-            "Pasirinkite rusiavimo buda (1 - pagal varda, 2 - pagal pavarde, 3 - pagal pazymiu vidurki, 4 - pagal pazymiu mediana, 5 - nerusiuoti): ",
-            5, 1);
-        settings.output_to_file = CLInputs::numInput("Pasirinkite isvesties buda (1 - terminalas, 2 - failas): ", 2, 1) ==
-                                  2;
     }
     else
     {
-
-        settings.sort_method = CLInputs::numInput(
-            "Pasirinkite rusiavimo buda (1 - pagal varda, 2 - pagal pavarde, 3 - pagal pazymiu vidurki, 4 - pagal pazymiu mediana, 5 - nerusiuoti): ",
-            5, 1);
-        settings.output_to_file = CLInputs::numInput("Pasirinkite isvesties buda (1 - terminalas, 2 - failas): ", 2, 1) ==
-                                  2;
-
         students = CL_Students::get_user_input(
             settings.generate_names,
             settings.generate_grades);
     }
-    Calc_Students::calc_grades(students);
-    t.start_watch(2);
-    Calc_Students::sort_students(students, settings.sort_method);
-    t.pause_watch(2);
 
-    // std::list<Student> high_st;
+    Calc_Students::calc_grades(students);
+    Calc_Students::sort_students(students, settings.sort_method);
+
+    std::list<Student> high_st;
     std::list<Student> low_st;
 
     Output_students output;
@@ -102,40 +98,46 @@ int main()
         output.close_file();
 
     t.start_watch(1);
-    // for (auto student : students)
-    // {
-    //     if (student.final_score_avg < 5.0)
-    //     {
-    //         low_st.push_back(student);
-    //     }
-    //     else
-    //     {
-    //         high_st.push_back(student);
-    //     }
-    // }
-
-    // for (std::list<Student>::iterator it = students.begin(); it != students.end();)
-    // {
-    //     if (it->final_score_avg < 5.0)
-    //     {
-    //         low_st.push_back(*it);
-    //         it = students.erase(it);
-    //     }
-    //     else
-    //     {
-    //         ++it;
-    //     }
-    // }
-
-    students.remove_if([&](Student &student)
-                       {
+    switch (settings.distribution_strategy)
+    {
+    case 1:
+        for (auto student : students)
+        {
+            if (student.final_score_avg < 5.0)
+            {
+                low_st.push_back(student);
+            }
+            else
+            {
+                high_st.push_back(student);
+            }
+        }
+        break;
+    case 2:
+        for (std::list<Student>::iterator it = students.begin(); it != students.end();)
+        {
+            if (it->final_score_avg < 5.0)
+            {
+                low_st.push_back(*it);
+                it = students.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
+        }
+        break;
+    case 3:
+        students.remove_if([&](Student &student)
+                           {
         if (student.final_score_avg < 5.0)
         {
             low_st.push_back(student);
             return true;
         }
         return false; });
-
+        break;
+    }
     t.pause_watch(1);
 
     output.open_file("nuskriaustukai.txt");
@@ -144,7 +146,10 @@ int main()
     low_st.clear();
 
     output.open_file("galvociai.txt");
-    output.output_students(students, true);
+    if (settings.distribution_strategy == 1)
+        output.output_students(high_st, true);
+    else
+        output.output_students(students, true);
     output.close_file();
     students.clear();
 

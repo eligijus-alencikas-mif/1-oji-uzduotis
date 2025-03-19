@@ -6,9 +6,17 @@ File_students::File_students(const std::string &file_name)
     this->count_hw();
 }
 
+File_students::File_students() {}
+
 File_students::~File_students()
 {
     this->closeFile();
+}
+
+void File_students::open(const std::string &file_name)
+{
+    this->openFile(file_name);
+    this->count_hw();
 }
 
 void File_students::openFile(const std::string &file_name)

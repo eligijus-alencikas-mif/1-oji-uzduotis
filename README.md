@@ -27,7 +27,7 @@
 * Duomenys gaunaumi iš ankščiau sugeneruotų failų
 * Kiekvienas studentas turi po 10 namų darbų rezultatų + egzaminas
 * Matavimai atliekami penkis kartus ir iš jų išgaunami vidurkiai
-* Matuojami vykdomi su penkiais skirtingais matavimo dydžiais
+* Matuojami vykdomi su penkiais skirtingais failo dydžiais
 * Kodas buvo sukompiliuotas naudojant -O3 gaire
 * Matuojami:
   * nuskaitymas iš failo
@@ -86,7 +86,7 @@
 * Duomenys gaunaumi iš ankščiau sugeneruotų failų
 * Kiekvienas studentas turi po 10 namų darbų rezultatų + egzaminas
 * Matavimai atliekami penkis kartus ir iš jų išgaunami vidurkiai
-* Matuojami vykdomi su penkiais skirtingais matavimo dydžiais
+* Matuojami vykdomi su penkiais skirtingais failo dydžiais
 * Kodas buvo sukompiliuotas naudojant -O3 gaire
 * Duomenys rūšiuojami studento pažymių vidurkio didėjimo tvarka
 * Matuojas:
@@ -232,34 +232,107 @@
 * Kiekvienas studentas turi po 10 namų darbų rezultatų + egzaminas
 * Matavimai atliekami penkis kartus ir iš jų išgaunami vidurkiai
 * Kodas buvo sukompiliuotas naudojant -O3 gaire
-* Testai vyks su 10,000,000 studentu failu
+* Matuojami vykdomi su penkiais skirtingais failo dydžiais
 * Duomenys nerūšiuojami
 * Naudojamos 3 strategijos:
-  1. Bendro studentai konteinerio skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius
-  2. Bendro studentų konteinerio skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį
-  3. Bendro studentų konteinerio skaidymas (rūšiavimas) panaudojant "efektyvius" darbo su konteineriais metodus (``erase``, ``remove_if``)
+1. Bendro studentai konteinerio skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius
+2. Bendro studentų konteinerio skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį
+3. Bendro studentų konteinerio skaidymas (rūšiavimas) panaudojant "efektyvius" darbo su konteineriais metodus (``erase``, ``remove_if``)
 
-### vector
+### Vector
 
-| Matavimas    | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+### 1 Strategija
+
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
 |--------------|----------|----------|----------|----------|----------|-----------|
-| 1 strategija | 688 ms   | 683 ms   | 697 ms   | 687 ms   | 682 ms   | 687 ms    |
-| 2 strategija | 539 ms   | 548 ms   | 547 ms   | 541 ms   | 542 ms   | 543 ms    |
-| 3 strategija | 351 ms   | 356 ms   | 360 ms   | 352 ms   | 353 ms   | 354 ms    |
+| 1,000        | 86 μs    | 82 μs    | 103 μs   | 87 μs    | 80 μs    | 87 μs     |
+| 10,000       | 1064 μs  | 1212 μs  | 1122 μs  | 1155 μs  | 1119 μs  | 1134 μs   |
+| 100,000      | 7906 μs  | 7346 μs  | 7287 μs  | 7355 μs  | 7335 μs  | 7445 μs   |
+| 1,000,000    | 52 ms    | 53 ms    | 53 ms    | 49 ms    | 53 ms    | 52 ms     |
+| 10,000,000   | 711 ms   | 707 ms   | 701 ms   | 699 ms   | 707 ms   | 705 ms    |
 
-### list
+### 2 Strategija
 
-| Matavimas    | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
 |--------------|----------|----------|----------|----------|----------|-----------|
-| 1 strategija | 912 ms   | 916 ms   | 933 ms   | 915 ms   | 929 ms   | 921 ms    |
-| 2 strategija | 175 ms   | 170 ms   | 179 ms   | 173 ms   | 175 ms   | 174 ms    |
-| 3 strategija | 671 ms   | 664 ms   | 661 ms   | 661 ms   | 688 ms   | 669 ms    |
+| 1,000        | 58 μs    | 70 μs    | 71 μs    | 60 μs    | 69 μs    | 65 μs     |
+| 10,000       | 807 μs   | 761 μs   | 796 μs   | 769 μs   | 737 μs   | 774 μs    |
+| 100,000      | 6122 μs  | 5950 μs  | 6083 μs  | 6338 μs  | 5944 μs  | 6087 μs   |
+| 1,000,000    | 46 ms    | 47 ms    | 46 ms    | 46 ms    | 47 ms    | 46 ms     |
+| 10,000,000   | 571 ms   | 570 ms   | 560 ms   | 562 ms   | 564 ms   | 565 ms    |
 
+### 3 Strategija
 
-### deque
-
-| Matavimas    | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
 |--------------|----------|----------|----------|----------|----------|-----------|
-| 1 strategija | 822 ms   | 829 ms   | 833 ms   | 834 ms   | 821 ms   | 827 ms    |
-| 2 strategija | 245 ms   | 240 ms   | 241 ms   | 236 ms   | 240 ms   | 240 ms    |
-| 3 strategija | 461 ms   | 459 ms   | 452 ms   | 459 ms   | 466 ms   | 459 ms    |
+| 1,000        | 36 μs    | 41 μs    | 48 μs    | 43 μs    | 40 μs    | 41 μs     |
+| 10,000       | 616 μs   | 562 μs   | 571 μs   | 614 μs   | 614 μs   | 595 μs    |
+| 100,000      | 4613 μs  | 4101 μs  | 4130 μs  | 4014 μs  | 3839 μs  | 4139 μs   |
+| 1,000,000    | 28 ms    | 28 ms    | 29 ms    | 29 ms    | 33 ms    | 29 ms     |
+| 10,000,000   | 355 ms   | 356 ms   | 354 ms   | 355 ms   | 351 ms   | 354 ms    |
+
+### List
+
+### 1 Strategija
+
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1,000        | 138 μs   | 103 μs   | 97 μs    | 103 μs   | 119 μs   | 112 μs    |
+| 10,000       | 1207 μs  | 1020 μs  | 1117 μs  | 953 μs   | 994 μs   | 1058 μs   |
+| 100,000      | 9856 μs  | 9813 μs  | 9280 μs  | 9690 μs  | 10011 μs | 9730 μs   |
+| 1,000,000    | 96 ms    | 100 ms   | 97 ms    | 97 ms    | 98 ms    | 97 ms     |
+| 10,000,000   | 946 ms   | 956 ms   | 956 ms   | 948 ms   | 1000 ms  | 961 ms    |
+
+### 2 Strategija
+
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1,000        | 17 μs    | 21 μs    | 18 μs    | 25 μs    | 16 μs    | 19 μs     |
+| 10,000       | 218 μs   | 177 μs   | 175 μs   | 181 μs   | 179 μs   | 186 μs    |
+| 100,000      | 1699 μs  | 1693 μs  | 1693 μs  | 1682 μs  | 1678 μs  | 1689 μs   |
+| 1,000,000    | 16 ms    | 17 ms    | 17 ms    | 17 ms    | 16 ms    | 16 ms     |
+| 10,000,000   | 172 ms   | 172 ms   | 173 ms   | 170 ms   | 170 ms   | 171 ms    |
+
+### 3 Strategija
+
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1,000        | 60 μs    | 50 μs    | 63 μs    | 49 μs    | 50 μs    | 54 μs     |
+| 10,000       | 529 μs   | 517 μs   | 674 μs   | 553 μs   | 677 μs   | 590 μs    |
+| 100,000      | 5377 μs  | 5615 μs  | 5088 μs  | 5006 μs  | 5225 μs  | 5262 μs   |
+| 1,000,000    | 66 ms    | 69 ms    | 68 ms    | 68 ms    | 66 ms    | 67 ms     |
+| 10,000,000   | 668 ms   | 668 ms   | 685 ms   | 665 ms   | 676 ms   | 672 ms    |
+
+### Deque
+
+### 1 Strategija
+
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1,000        | 84 μs    | 85 μs    | 138 μs   | 107 μs   | 84 μs    | 99 μs     |
+| 10,000       | 844 μs   | 804 μs   | 786 μs   | 898 μs   | 832 μs   | 832 μs    |
+| 100,000      | 10858 μs | 8951 μs  | 8304 μs  | 7947 μs  | 8524 μs  | 8916 μs   |
+| 1,000,000    | 82 ms    | 84 ms    | 80 ms    | 80 ms    | 80 ms    | 81 ms     |
+| 10,000,000   | 820 ms   | 818 ms   | 810 ms   | 820 ms   | 819 ms   | 817 ms    |
+
+### 2 Strategija
+
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1,000        | 37 μs    | 34 μs    | 33 μs    | 35 μs    | 29 μs    | 33 μs     |
+| 10,000       | 248 μs   | 249 μs   | 250 μs   | 266 μs   | 257 μs   | 254 μs    |
+| 100,000      | 2483 μs  | 2414 μs  | 2526 μs  | 2483 μs  | 2520 μs  | 2485 μs   |
+| 1,000,000    | 24 ms    | 24 ms    | 24 ms    | 24 ms    | 23 ms    | 23 ms     |
+| 10,000,000   | 243 ms   | 253 ms   | 239 ms   | 243 ms   | 243 ms   | 244 ms    |
+
+### 3 Strategija
+
+| Studentu sk. | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1,000        | 47 μs    | 48 μs    | 53 μs    | 57 μs    | 58 μs    | 52 μs     |
+| 10,000       | 460 μs   | 446 μs   | 452 μs   | 425 μs   | 436 μs   | 443 μs    |
+| 100,000      | 4231 μs  | 4184 μs  | 4566 μs  | 4238 μs  | 4094 μs  | 4262 μs   |
+| 1,000,000    | 49 ms    | 46 ms    | 48 ms    | 49 ms    | 48 ms    | 48 ms     |
+| 10,000,000   | 465 ms   | 466 ms   | 467 ms   | 465 ms   | 468 ms   | 466 ms    |
+
+
