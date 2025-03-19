@@ -227,6 +227,11 @@
 
 ## Ketvirtas tyrimas (Skirstymas)
 
+* Laiko matavimui naudoajam `chrono` biblioteka
+* Duomenys gaunaumi iš ankščiau sugeneruotų failų
+* Kiekvienas studentas turi po 10 namų darbų rezultatų + egzaminas
+* Matavimai atliekami penkis kartus ir iš jų išgaunami vidurkiai
+* Kodas buvo sukompiliuotas naudojant -O3 gaire
 * Testai vyks su 10,000,000 studentu failu
 * Duomenys nerūšiuojami
 * Naudojamos 3 strategijos:
@@ -258,5 +263,3 @@
 | 1 strategija | 822 ms   | 829 ms   | 833 ms   | 834 ms   | 821 ms   | 827 ms    |
 | 2 strategija | 245 ms   | 240 ms   | 241 ms   | 236 ms   | 240 ms   | 240 ms    |
 | 3 strategija | 461 ms   | 459 ms   | 452 ms   | 459 ms   | 466 ms   | 459 ms    |
-
-
