@@ -1,3 +1,56 @@
+# Release aprašymai
+
+## v.pradinė
+Įvadimai studentų duomenys ir ir išvedami jų apskaičiuoti vidurkiai ar medianos į komdų eilutę 
+
+## v0.1
+Galima generuoti studentų duomenis ir sukurtos 2 projekto versijos 1 - naudojant std::vector, 2 - naudojant c masyvus
+
+## V0.2
+Pridėtas duomenų įvesties į ir išvesties iš failo pasirinkimas, panaikinta c masyvą naudojanti programos versija
+
+## V0.3
+Pridėtas duomenų rūšiavimas pagal pasirinktus kriterijus
+
+## V0.3.1
+Klaidų žinutės lietuvių kalba
+
+## V0.4
+Sukurtas README.md failas kuriami surašyti programos spartos matmenys ir pridėtas studentų failo generavimo funkcionalumas
+
+## V0.4.1
+Pataisyti ir papildyti matavimai, klaidų ištaisymas
+
+## V0.4.2
+Klaidos pataisymas
+
+## V1.0 pradinis relizas
+Sukurtos papildomai dvi programos veikimo versijos, papildytas README programos veikimo spartos matmenimis ir testavimo detalėmis
+
+# Naudojimos instrukcija
+
+* Paleidimas: Nueiti į norimo naudojimo konteinerio build aplankalą ir paleisti programą "1-oji-uzduotis"
+* Skaičiavimų atlikimas: 
+  1. Paleidus programą duodamas pasirinkimas 1-6, jeigu norite atlikti skaičiavimus su studentai pasirinkite 1-4 pagal poreikį (ką pasirinkimai daro bus aprašyta programos veikimo metu)
+  2. Jeigu pasirinkote 4 pasirinkimą įvesikte studentų failo pavadinimą (studentų failas turi būti tame pačiame aplankale iš kurios ir paleidote programą)
+  3. Pasirinkite rūšiavimo būdą (vidurkių ir medianų rūšiavimas yra nuo mažiausio iki didžiausio)
+  4. Pasirinkite išvesties būdą
+  5. Pasirinkite skirstymo strategiją
+  6. Jeigu pasirinkote įrašyti pažimius ranka ar generuoti juos sekite pragramoje nurodytas instrukcijas
+
+# Diegimo instrukcija
+
+  1. Nueikite į norimos programos versijos aplankalo (Deque/List/Vector)
+      * ``cd Vector`` <br>
+        Arba
+      * ``cd List`` <br>
+        Arba
+      * ``cd Deque``
+  2. Sukurkite build aplankalą ir įeikite į jį<br>``mkdir build && cd build``
+  3. Paleiskite cmake comandą <br> ``cmake ..``
+  4. Išeikite iš aplankalo ir sukompiliuokite programą <br> ``cd .. && cmake --build build``
+  5. Pragrama bus build aplankale su pavadinimu "1-oji-uzduotis"
+
 # Tyrimai
 
 ### Matavimo sistemos parametrai:
