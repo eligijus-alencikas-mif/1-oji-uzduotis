@@ -62,7 +62,6 @@ int main()
     {
         File_students file(settings.input_file_name);
         file.read_students(students);
-
         if (!file.file_opened)
             return 0;
 
@@ -113,20 +112,30 @@ int main()
     //     }
     // }
 
-    size_t students_new_size = 0;
-    for (size_t i = 0; i < students.size(); i++)
-    {
-        auto student = students[i];
-        if (student.final_score_avg < 5.0)
-        {
-            low_st.push_back(student);
-        }
-        else
-        {
-            students.at(students_new_size++) = student;
-        }
-    }
-    students.resize(students_new_size);
+    // size_t students_new_size = 0;
+    // for (size_t i = 0; i < students.size(); i++)
+    // {
+    //     auto student = students[i];
+    //     if (student.final_score_avg < 5.0)
+    //     {
+    //         low_st.push_back(student);
+    //     }
+    //     else
+    //     {
+    //         students.at(students_new_size++) = student;
+    //     }
+    // }
+    // students.resize(students_new_size);
+
+    students.erase(std::remove_if(students.begin(), students.end(), [&](Student &student)
+                                  { 
+                                    if (student.final_score_avg < 5.0)
+                                    {
+                                        low_st.push_back(student);
+                                        return true;
+                                    }
+                                    return false; }),
+                   students.end());
 
     t.pause_watch(1);
 

@@ -114,30 +114,27 @@ int main()
     //     }
     // }
 
-    for (std::list<Student>::iterator it = students.begin(); it != students.end();)
-    {
-        if (it->final_score_avg < 5.0)
-        {
-            low_st.push_back(*it);
-            it = students.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
-
-    // for (auto &student : students)
+    // for (std::list<Student>::iterator it = students.begin(); it != students.end();)
     // {
-    //     if (student.final_score_avg < 5.0)
+    //     if (it->final_score_avg < 5.0)
     //     {
-    //         low_st.push_back(student);
+    //         low_st.push_back(*it);
+    //         it = students.erase(it);
     //     }
     //     else
     //     {
-    //         students.erase(student);
+    //         ++it;
     //     }
     // }
+
+    students.remove_if([&](Student &student)
+                       {
+        if (student.final_score_avg < 5.0)
+        {
+            low_st.push_back(student);
+            return true;
+        }
+        return false; });
 
     t.pause_watch(1);
 

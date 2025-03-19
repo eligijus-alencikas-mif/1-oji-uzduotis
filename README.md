@@ -88,6 +88,7 @@
 * Matavimai atliekami penkis kartus ir iš jų išgaunami vidurkiai
 * Matuojami vykdomi su penkiais skirtingais matavimo dydžiais
 * Kodas buvo sukompiliuotas naudojant -O3 gaire
+* Duomenys rūšiuojami studento pažymių vidurkio didėjimo tvarka
 * Matuojas:
   * Duomenų nuskaitymas iš failų į atitinkamą konteinerį
   * Studentų rūšiavimas didėjimo tvarką konteineryje
@@ -224,28 +225,38 @@
 | Rušiavimas  | 2040 ms  | 1952 ms  | 1952 ms  | 1982 ms  | 1969 ms  | 1979 ms   |
 | Skirstymas  | 1496 ms  | 1479 ms  | 1503 ms  | 1482 ms  | 1500 ms  | 1492 ms   |
 
-## Ketvirtas tyrimas (Rūšiavimas (sort))
+## Ketvirtas tyrimas (Skirstymas)
 
 * Testai vyks su 10,000,000 studentu failu
+* Duomenys nerūšiuojami
+* Naudojamos 3 strategijos:
+  1. Bendro studentai konteinerio skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius
+  2. Bendro studentų konteinerio skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį
+  3. Bendro studentų konteinerio skaidymas (rūšiavimas) panaudojant "efektyvius" darbo su konteineriais metodus (``erase``, ``remove_if``)
 
 ### vector
 
-| Matavimas | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
-|-----------|----------|----------|----------|----------|----------|-----------|
-| {R1}      | 688 ms   | 683 ms   | 697 ms   | 687 ms   | 682 ms   | 687 ms    |
-| {R2}      | 539 ms   | 548 ms   | 547 ms   | 541 ms   | 542 ms   | 543 ms    |
+| Matavimas    | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1 strategija | 688 ms   | 683 ms   | 697 ms   | 687 ms   | 682 ms   | 687 ms    |
+| 2 strategija | 539 ms   | 548 ms   | 547 ms   | 541 ms   | 542 ms   | 543 ms    |
+| 3 strategija | 351 ms   | 356 ms   | 360 ms   | 352 ms   | 353 ms   | 354 ms    |
 
 ### list
 
-| Matavimas | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
-|-----------|----------|----------|----------|----------|----------|-----------|
-| {R1}      | 912 ms   | 916 ms   | 933 ms   | 915 ms   | 929 ms   | 921 ms    |
-| {R2}      | 175 ms   | 170 ms   | 179 ms   | 173 ms   | 175 ms   | 174 ms    |
+| Matavimas    | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1 strategija | 912 ms   | 916 ms   | 933 ms   | 915 ms   | 929 ms   | 921 ms    |
+| 2 strategija | 175 ms   | 170 ms   | 179 ms   | 173 ms   | 175 ms   | 174 ms    |
+| 3 strategija | 671 ms   | 664 ms   | 661 ms   | 661 ms   | 688 ms   | 669 ms    |
+
 
 ### deque
 
-| Matavimas | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
-|-----------|----------|----------|----------|----------|----------|-----------|
-| {R1}      | 822 ms   | 829 ms   | 833 ms   | 834 ms   | 821 ms   | 827 ms    |
-| {R2}      | 245 ms   | 240 ms   | 241 ms   | 236 ms   | 240 ms   | 240 ms    |
+| Matavimas    | Laikas 1 | Laikas 2 | Laikas 3 | Laikas 4 | Laikas 5 | Vidurkiai |
+|--------------|----------|----------|----------|----------|----------|-----------|
+| 1 strategija | 822 ms   | 829 ms   | 833 ms   | 834 ms   | 821 ms   | 827 ms    |
+| 2 strategija | 245 ms   | 240 ms   | 241 ms   | 236 ms   | 240 ms   | 240 ms    |
+| 3 strategija | 461 ms   | 459 ms   | 452 ms   | 459 ms   | 466 ms   | 459 ms    |
+
 

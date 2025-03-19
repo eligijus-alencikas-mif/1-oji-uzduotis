@@ -103,36 +103,6 @@ int main()
 
     t.start_watch(1);
 
-    auto size = students.size();
-    for (size_t i = 0; i < size; i++)
-    {
-        if (students.front().final_score_avg < 5.0)
-        {
-            low_st.push_back(students.front());
-        }
-        else
-        {
-            students.push_back(students.front());
-        }
-        students.pop_front();
-    }
-
-    // auto end = students.end();
-    // for (auto it = students.begin(); it != end;)
-    // {
-    //     if (it->final_score_avg < 5.0)
-    //     {
-    //         low_st.push_back(*it);
-    //         // it = students.erase(it);
-    //     }
-    //     else
-    //     {
-    //         students.push_back(*it);
-    //         students.pop_front();
-    //         ++it;
-    //     }
-    // }
-
     // for (auto student : students)
     // {
     //     if (student.final_score_avg < 5.0)
@@ -141,11 +111,34 @@ int main()
     //     }
     //     else
     //     {
-    //         students.push_back(student);
-    //         students.pop_front();
-    //         // high_st.push_back(student);
+    //         high_st.push_back(student);
     //     }
     // }
+
+    // auto size = students.size();
+    // for (size_t i = 0; i < size; i++)
+    // {
+    //     if (students.front().final_score_avg < 5.0)
+    //     {
+    //         low_st.push_back(students.front());
+    //     }
+    //     else
+    //     {
+    //         students.push_back(students.front());
+    //     }
+    //     students.pop_front();
+    // }
+
+    students.erase(std::remove_if(students.begin(), students.end(), [&](const Student &s)
+                                  {
+      if(s.final_score_avg < 5.0)
+      {
+          low_st.push_back(s);
+          return true;
+      }     
+      return false; }),
+                   students.end());
+
     t.pause_watch(1);
 
     output.open_file("nuskriaustukai.txt");
